@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "747769881536",
+    "project_id": "simplyhealthy-41ee6",
+    "storage_bucket": "simplyhealthy-41ee6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747769881536:android:3195c79b37029988c79e25",
+        "android_client_info": {
+          "package_name": "com.example.simplyhealthy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747769881536-gcs8ffg263lv9bcat24ninp2auoks3ej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simplyhealthy",
+            "certificate_hash": "8be80db03811f0727720469192891786876be9d5"
+          }
+        },
+        {
+          "client_id": "747769881536-1a17kc3t2vqv2qhuhhenvqhvn92slbl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR4dgSaNHslCOXbrllVKgAvuAe5Wo0fG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747769881536-1a17kc3t2vqv2qhuhhenvqhvn92slbl0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
