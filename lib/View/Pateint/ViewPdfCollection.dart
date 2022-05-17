@@ -906,8 +906,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                         autofocus: true,
                         style: TextStyle(fontSize: 16, color: black),
                         validator: (value) {
-                          final nameRegExp = RegExp(
-                              r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$");
+                          final nameRegExp = RegExp(r"^[a-zA-Z0-9]");
 
                           if (!nameRegExp.hasMatch(value!)) {
                             return "";

@@ -651,7 +651,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                         textAlign: TextAlign.start,
                         style: TextStyle(fontSize: 16, color: black),
                         validator: (value) {
-                          final nameRegExp = RegExp(r"^[a-zA-Z]");
+                          final nameRegExp = RegExp(r"^[a-zA-Z0-9]");
 
                           if (!nameRegExp.hasMatch(_name.text)) {
                             return "";

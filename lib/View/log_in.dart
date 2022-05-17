@@ -26,11 +26,11 @@ class _LogInState extends State<LogIn> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: _height*100,
-           //padding: EdgeInsets.only(top: _height * 65),
+            height: _height * 100,
+            //padding: EdgeInsets.only(top: _height * 65),
             child: Column(
               children: [
-                 SizedBox(
+                SizedBox(
                   height: _height * 10,
                 ),
                 Image.asset(
@@ -53,7 +53,7 @@ class _LogInState extends State<LogIn> {
                         const SizedBox(
                           height: 10,
                         ),
-                         Text(
+                        Text(
                           "Log In",
                           style: GoogleFonts.montserrat(
                             color: Colors.white,
@@ -62,13 +62,13 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                         Container(
-                          
-                                                  padding: EdgeInsets.fromLTRB(0,40,0, 40),
+                          padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
                           child: TextFormField(
                             //initialValue: name,
                             keyboardType: TextInputType.phone,
                             textAlign: TextAlign.start,
-                            style: GoogleFonts.montserrat(fontSize: 22, color: Colors.black),
+                            style: GoogleFonts.montserrat(
+                                fontSize: 22, color: Colors.black),
                             validator: (value) {
                               if (value!.length != 10) {
                                 return "Please Enter Valid Phone No";
@@ -82,10 +82,11 @@ class _LogInState extends State<LogIn> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIconConstraints: BoxConstraints(maxWidth: 50),
+                              prefixIconConstraints:
+                                  BoxConstraints(maxWidth: 50),
                               prefixIcon: Center(
-                               //padding: const EdgeInsets.fromLTRB(10,12, 10,12),
-                                child:  Text(
+                                //padding: const EdgeInsets.fromLTRB(10,12, 10,12),
+                                child: Text(
                                   "+91",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
@@ -95,15 +96,14 @@ class _LogInState extends State<LogIn> {
                                 ),
                               ),
                               hintText: "Enter Mobile No",
-                              
                               isDense: true,
                               contentPadding: EdgeInsets.all(10),
-                              hintStyle:  GoogleFonts.montserrat(
-                                      fontSize: 22,
-                                      color: Colors.grey,
-                                      ),
+                              hintStyle: GoogleFonts.montserrat(
+                                fontSize: 22,
+                                color: Colors.grey,
+                              ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:  BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               enabledBorder: UnderlineInputBorder(
@@ -114,34 +114,36 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                         Container(
-                      height: _height * 7,
-                      width: _width * 90,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>  otp_screen(phoneNo: mobileno!,)),
-                            );
-                          },
-                          child:  Text(
-                            "Log In",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                              shape:
-                                  MaterialStateProperty.all<RoundedRectangleBorder>(
+                          height: _height * 7,
+                          width: _width * 90,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => otp_screen(
+                                            phoneNo: mobileno!,
+                                          )),
+                                );
+                              },
+                              child: Text(
+                                "Log In",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(25.0),
-                                          side: BorderSide(color: Colors.white))))),
-                    ),
-                    
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                          side: BorderSide(
+                                              color: Colors.white))))),
+                        ),
                       ],
                     ),
                   ),
