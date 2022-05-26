@@ -140,7 +140,7 @@ class _ReadMoreBlogState extends State<ReadMoreBlog> {
                                   width: 10,
                                 ),
                                 Text(
-                                  "5 min",
+                                  "${widget.readingTime}",
                                   style: GoogleFonts.mulish(
                                       fontSize: 14,
                                       color: Colors.white,

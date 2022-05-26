@@ -163,7 +163,7 @@ class _BlogState extends State<Blog> {
                                                             image: snapshot.data['data']
                                                                 [index]['img'],
                                                             readingTime: snapshot.data['data']
-                                                                [index]['img'],
+                                                                [index]['id'].toString(),
                                                             heading: snapshot.data['data']
                                                                     [index]
                                                                 ['title'],
@@ -255,7 +255,7 @@ class _BlogState extends State<Blog> {
                                                                     readingTime:
                                                                         snapshot.data['data'][index]
                                                                             [
-                                                                            'description'],
+                                                                            'id'].toString(),
                                                                     title: snapshot.data['data']
                                                                             [
                                                                             index]
@@ -346,7 +346,8 @@ class _BlogState extends State<Blog> {
                                                             image: snapshot.data['data']
                                                                 [index]['img'],
                                                             readingTime:
-                                                                "5 min",
+                                                                snapshot.data['data']
+                                                                [index]['id'].toString(),
                                                             heading:
                                                                 snapshot.data['data']
                                                                         [index]
@@ -429,7 +430,10 @@ class _BlogState extends State<Blog> {
                                                                             index]
                                                                         ['img'],
                                                                     readingTime:
-                                                                        "8 min",
+                                                                        snapshot.data['data']
+                                                                            [
+                                                                            index]
+                                                                        ['id'].toString(),
                                                                     title: snapshot.data['data']
                                                                             [
                                                                             index]

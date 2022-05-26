@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:simplyhealthy/View/Doctor/item_d_Report.dart';
 
 import '../Pateint/item_Report.dart';
 import 'item_blogList.dart';
@@ -25,7 +26,7 @@ class _BottomNavigationHomePageState extends State<BottomNavigationHomePage> {
   @override
   Widget build(BuildContext context) {
     final _pageOptions = [
-      Item_Report(id: widget.id,),
+      ItemDReport(),
       Blog(
         id: widget.id,
       )

@@ -63,7 +63,7 @@ class BlogApi {
 
     http.Response response = await http.put(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/update_blog?id=$id"),
+            "https://pdf-kylo.herokuapp.com/api/v1/views/user_blog_create?id=$id"),
         body: body,
         headers: headers);
 

@@ -909,12 +909,14 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       response['table'][i]['1'].entries.map((e) {
         //print(i);
         if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().length != 0) {
-          values.add(MLModel(
+          values.add(
+            MLModel(
               response['table'][i]['0'][e.key]
                   .replaceAll(RegExp('[^A-Za-z]'), '')
                   .toString(),
               e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
-              response['table'][i]['2'][e.key]));
+              response['table'][i]['2'][e.key])
+              );
         }
       }).toList();
     }
