@@ -11,6 +11,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:simplyhealthy/Controller/sharedPreferance.dart';
+import 'package:simplyhealthy/Model/MlResponseModel.dart';
+import 'package:simplyhealthy/main.dart';
 import '/Colors/Colors.dart';
 import '/Controller/pdfAPI.dart';
 import '/View/Pateint/PDFViewer.dart';
@@ -675,201 +678,11 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     // showDialog<AlertDialog>(context: context, a);
   }
 
-  // Future UploadPdfDialog(collectionName) async {
-  //   final formGlobalKey = GlobalKey<FormState>();
-  //   bool isFileUploading = false;
-  //   String filepath = "";
-  //   TextEditingController title = TextEditingController();
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: true,
-  //       builder: ((BuildContext context) {
-  //         return AlertDialog(
-  //           scrollable: true,
-  //           //content: Text('Select where you want to capture the image from'),
-  //           title: StatefulBuilder(builder: (BuildContext context, SetState) {
-  //             return Form(
-  //               key: formGlobalKey,
-  //               child: Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text(
-  //                     widget.collectionName,
-  //                     style: GoogleFonts.poppins(
-  //                         color: Colors.black,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.w600),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 20,
-  //                   ),
-  //                   Container(
-  //                     height: 40,
-  //                     width: 250,
-  //                     child: TextFormField(
-  //                       controller: title,
-  //                       maxLines: 1,
-  //                       autofocus: true,
-  //                       textAlign: TextAlign.start,
-  //                       style: TextStyle(fontSize: 16, color: black),
-  //                       validator: (value) {
-  //                         final nameRegExp = RegExp(r"^[a-zA-Z0-9]");
-  //                         if (!nameRegExp.hasMatch(value!)) {
-  //                           return "";
-  //                         } else {
-  //                           return null;
-  //                         }
-  //                       },
-  //                       decoration: InputDecoration(
-  //                         errorStyle: const TextStyle(
-  //                           height: 0,
-  //                         ),
-  //                         filled: true,
-  //                         fillColor: col6,
-  //                         hintText: "Pdf Name",
-  //                         isDense: true,
-  //                         contentPadding: EdgeInsets.all(10),
-  //                         hintStyle: GoogleFonts.poppins(
-  //                             textStyle: const TextStyle(
-  //                                 fontSize: 14,
-  //                                 color: hinttextColor,
-  //                                 fontWeight: FontWeight.w500)),
-  //                         focusedBorder: OutlineInputBorder(
-  //                           borderSide: const BorderSide(color: col3),
-  //                           borderRadius: BorderRadius.circular(6),
-  //                         ),
-  //                         enabledBorder: UnderlineInputBorder(
-  //                           borderSide: const BorderSide(color: textFieldColor),
-  //                           borderRadius: BorderRadius.circular(6),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   InkWell(
-  //                     onTap: () {
-  //                       setState(() {
-  //                         isFileUploading = true;
-  //                       });
-  //                       getPdfAndUpload().then((value) async {
-  //                         print("hello dear ${value}");
-  //                         setState(() {
-  //                           print("11");
-  //                           filepath = value;
-  //                           print("1222");
-  //                           isFileUploading = false;
-  //                           print("144");
-  //                         });
-  //                         print("555");
-  //                       });
-  //                     },
-  //                     child: Text(
-  //                       'Select file',
-  //                       style: GoogleFonts.poppins(
-  //                           color: Colors.blue,
-  //                           fontSize: 16,
-  //                           fontWeight: FontWeight.w500),
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   isFileUploading
-  //                       ? Center(
-  //                           child: CircularProgressIndicator(
-  //                               backgroundColor: black),
-  //                         )
-  //                       : Text(
-  //                           filepath,
-  //                           style: GoogleFonts.poppins(
-  //                               color: Colors.red,
-  //                               fontSize: 10,
-  //                               fontWeight: FontWeight.w500),
-  //                         ),
-  //                 ],
-  //               ),
-  //             );
-  //           }),
-  //           actions: <Widget>[
-  //             Align(
-  //               alignment: Alignment.center,
-  //               child: ElevatedButton(
-  //                   onPressed: () async {
-  //                     //getDoctorList(_speciality.text);
-  //                     final isValid = formGlobalKey.currentState!.validate();
-  //                     if (!isValid) {
-  //                       return;
-  //                     } else {
-  //                       formGlobalKey.currentState!.save();
-  //                       if (flag) {
-  //                         Navigator.pop(context);
-  //                         pdfApi.addPdfInCollection(
-  //                             widget.userid,
-  //                             title.text,
-  //                             collectionName,
-  //                             uploadFileURL,
-  //                             viewfile!.path.toString());
-  //                         // Navigator.pop(context);
-  //                         // setState(() {
-  //                         //   //pdf.add(file);
-  //                         //   if (nameadded) {
-  //                         //     map['id'] = widget.userid;
-  //                         //     map['title'] = widget.collectionName;
-  //                         //     mapCOPY['id'] = widget.userid;
-  //                         //     mapCOPY['title'] = widget.collectionName;
-  //                         //     nameadded = false;
-  //                         //   }
-  //                         //   map["l_list"].add({
-  //                         //     "name": title.text.toString(),
-  //                         //     "link": "${firebaseUrl[i]}",
-  //                         //     "path": file,
-  //                         //   });
-  //                         //   mapCOPY["l_list"].add({
-  //                         //     "name": title.text.toString(),
-  //                         //     "link": "${firebaseUrl[i]}",
-  //                         //     "path": "${file.toString()}"
-  //                         //   });
-  //                         //   print("map $i ${map['l_list'][0]}");
-  //                         //   i++;
-  //                         //   flag = false;
-  //                         //});
-  //                       } else {
-  //                         Fluttertoast.showToast(msg: "file is uploading..");
-  //                       }
-  //                     }
-  //                   },
-  //                   style: ElevatedButton.styleFrom(
-  //                     minimumSize: Size(250, 40),
-  //                     primary: Colors.black,
-  //                     shape: RoundedRectangleBorder(
-  //                       borderRadius: BorderRadius.circular(10.0),
-  //                     ),
-  //                   ),
-  //                   child: Text(
-  //                     "Upload PDF",
-  //                     style: GoogleFonts.poppins(
-  //                       textStyle: TextStyle(
-  //                         fontSize: 18,
-  //                       ),
-  //                     ),
-  //                   )),
-  //             ),
-  //             SizedBox(
-  //               height: 20,
-  //             ),
-  //           ],
-  //         ).build(context);
-  //       }));
-  //   // showDialog<AlertDialog>(context: context, a);
-  // }
-
   Future _FileShareDialog(collectionName) async {
     //String? filterLocal;
     final formGlobalKey = GlobalKey<FormState>();
     String filepath = "";
+    File? sendFileAnalysis;
     TextEditingController title = TextEditingController();
     bool isfileuploading = false;
     return showDialog(
@@ -948,9 +761,10 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                           isfileuploading = true;
                         });
                         getPdfAndUpload().then((value) {
-                          print("hello dear ${value}");
+                          print("hello dear ${value.path}");
                           setState(() {
-                            filepath = value;
+                            sendFileAnalysis = value;
+                            filepath = value.path;
                             isfileuploading = false;
                           });
                         });
@@ -1011,8 +825,8 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                             Navigator.pop(context);
                             Navigator.pop(context);
                             Navigator.pop(context);
-                          }else{
-                             Navigator.pop(context);
+                          } else {
+                            Navigator.pop(context);
                             Navigator.pop(context);
                           }
 
@@ -1025,6 +839,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                                   viewfile!.path.toString())
                               .then((value) {
                             if (value == 201 || value == 200) {
+                              DoAnalysis(sendFileAnalysis!);
                               getColletionPdfList();
                             }
                           });
@@ -1053,6 +868,139 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
             ).build(context);
           });
         }));
+  }
+
+  Future DoAnalysis(File file) async {
+    Dio dio = Dio();
+
+    var client = http.Client();
+
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path, filename: fileName),
+    });
+    Response response =
+        await dio.post("http://54.197.107.221:5000/pdf", data: formData);
+
+    print("DIO ${response.data}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      MlAnalyzedREport(response.data, fileName);
+    } else {
+      Fluttertoast.showToast(msg: "You will get analyzed report by 24 hour");
+    }
+  }
+
+  Future MlAnalyzedREport(response, fileName) async {
+    int totalPage = response['table'].length;
+
+    print("Total Number Of Page : $totalPage");
+
+    // List heading = [];
+    // List value = [];
+
+    List temp = [];
+    List values = [];
+    List Ranges = [];
+
+    MLModel mlmodel;
+
+    for (int i = 0; i < totalPage; i++) {
+      response['table'][i]['1'].entries.map((e) {
+        //print(i);
+        if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().length != 0) {
+          values.add(MLModel(
+              response['table'][i]['0'][e.key]
+                  .replaceAll(RegExp('[^A-Za-z]'), '')
+                  .toString(),
+              e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
+              response['table'][i]['2'][e.key]));
+        }
+      }).toList();
+    }
+
+    mlmodel = values[0];
+    print("${mlmodel.testname} || ${mlmodel.value} || ${mlmodel.range}");
+    print(":: ${values}");
+
+
+   
+
+
+
+    // for (int i = 0; i < totalPage; i++) {
+    //   for (int j = 0; j <= response['table'][i]['0'].length; j++) {
+    //     print("page $i : ${response['table'][i].length} ");
+    //     if (response['table'][i].length >= 2) {
+    //       if (response['table'][i]['0']["$j"].toString().contains("-") ||
+    //           response['table'][i]['0']["$j"].toString().contains("TEST")) {
+    //       } else {
+    //         print(
+    //             "$i : $j || ${response['table'][i]['0']["${j + 1}"]} = ${response['table'][i]['1']["${j + 1}"]} ");
+    //         if (response['table'][i]['0']["${j + 1}"].length != 0) {
+    //           heading.add(response['table'][i]['0']["${j + 1}"]
+    //               .toString()
+    //               .replaceAll('/n', ''));
+    //           value.add(response['table'][i]['1']["${j + 1}"]);
+    //         }
+
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+    // print(heading);
+    // print(value);
+
+    // MakeOneAttribute(heading, value, fileName);
+  }
+
+  MakeOneAttribute(heading, value, fileName) async {
+    List newH = [];
+    List newV = [];
+    List month = [];
+
+    for (int i = 0; i < heading.length; i++) {
+      if (await heading[0].toString() != heading[i].toString()) {
+      } else {
+        newH.add(heading[i]);
+        month.add(i);
+        try {
+          newV.add(double.parse(value[i]));
+        } catch (e) {
+          print(e);
+          break;
+        }
+      }
+    }
+    print("final heading $newH");
+    print("final value $newV");
+
+    if (newV.isNotEmpty) {
+      postAnalysisReport(heading[0], newV, month, fileName);
+    }
+  }
+
+  postAnalysisReport(
+      String title, List value, List month, String reportName) async {
+    var b1 = jsonEncode({
+      "id": widget.userid,
+      "title": title,
+      "values": value,
+      "month": month,
+      "reportName": reportName
+    });
+
+    var h1 = {'Content-Type': 'application/json'};
+
+    print("send body for post report $b1");
+    http.Response response = await http.post(
+        Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
+        body: b1,
+        headers: h1);
+
+    print("Analysis Post report :: ${response.statusCode} | ${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 201) {}
   }
 
   Future getPdfAndUpload() async {
@@ -1085,7 +1033,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       uploadFileURL = downloadUrl;
     });
 
-    return file.path;
+    return file;
   }
 
   Future downloadPDF(url, pdfname) async {
@@ -1244,4 +1192,15 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
         }));
     // showDialog<AlertDialog>(context: context, a);
   }
+}
+
+// To parse this JSON data, do
+//
+//     final model = modelFromJson(jsonString);
+class MLModel {
+  var testname;
+  var value;
+  var range;
+
+  MLModel(this.testname, this.value, this.range);
 }

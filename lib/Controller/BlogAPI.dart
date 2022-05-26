@@ -24,7 +24,7 @@ class BlogApi {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"),
+            "https://pdf-kylo.herokuapp.com/api/v1/views/user_blog_create"),
         body: body,
         headers: headers);
 
@@ -40,7 +40,7 @@ class BlogApi {
 
   Future getAllBlog(id) async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/all_posts?id=$id"));
+        "https://pdf-kylo.herokuapp.com/api/v1/views/all_posts?id=$id"));
 
     print("${response.statusCode} ${response.body}");
 

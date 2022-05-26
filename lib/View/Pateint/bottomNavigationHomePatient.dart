@@ -61,7 +61,9 @@ class _BottomNavigationPatientState extends State<BottomNavigationPatient> {
   @override
   Widget build(BuildContext context) {
     final _pageOptions = [
-      Item_Report(id: widget.id,),
+      Item_Report(
+        id: widget.id,
+      ),
       item_P_PDFList(
         id: widget.id,
         name: widget.name,

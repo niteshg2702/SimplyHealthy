@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -195,37 +194,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                                 width: _width * 30,
                                                 fit: BoxFit.cover,
                                               ),
-                                              // Image.network(
-                                              //   snapshot.data['data'][index]['img'],
-                                              //   scale: 4.3,
-                                              // ),
-                                              // Card(
-                                              //   elevation: 5,
-                                              //   shadowColor: Colors.black87,
-                                              //   child: Padding(
-                                              //     padding:
-                                              //         const EdgeInsets.all(2.5),
-                                              //     child: Row(
-                                              //       children: [
-                                              //         Text(" Edit",
-                                              //             style: GoogleFonts
-                                              //                 .poppins(
-                                              //                     fontSize: 10,
-                                              //                     color: Colors
-                                              //                         .blue)),
-                                              //         const Icon(
-                                              //           Icons.edit,
-                                              //           color: Colors.blue,
-                                              //           size: 10,
-                                              //         ),
-                                              //       ],
-                                              //     ),
-                                              //   ),
-                                              //   shape: RoundedRectangleBorder(
-                                              //     borderRadius:
-                                              //         BorderRadius.circular(20),
-                                              //   ),
-                                              // )
+                                              
                                             ],
                                           )
                                         ],
@@ -233,13 +202,6 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      // Text(
-                                      //   snapshot.data['data'][index]
-                                      //       ['description'],
-                                      //   style: GoogleFonts.mulish(
-                                      //       color: Colors.black, fontSize: 14),
-                                      //   textAlign: TextAlign.justify,
-                                      // ),
                                       DescriptionTextWidget(
                                           text: snapshot.data['data'][index]
                                               ['description']),

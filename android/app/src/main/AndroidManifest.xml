@@ -2,6 +2,7 @@
     package="com.example.simplyhealthy">
    <application
         android:label="simplyhealthy"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
