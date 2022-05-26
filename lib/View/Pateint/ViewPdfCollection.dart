@@ -909,89 +909,30 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       response['table'][i]['1'].entries.map((e) {
         //print(i);
         if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().length != 0) {
-          values.add(
-            MLModel(
+          values.add(MLModel(
               response['table'][i]['0'][e.key]
                   .replaceAll(RegExp('[^A-Za-z]'), '')
                   .toString(),
               e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
-              response['table'][i]['2'][e.key])
-              );
+              response['table'][i]['2'][e.key]));
         }
       }).toList();
     }
 
     mlmodel = values[0];
     print("${mlmodel.testname} || ${mlmodel.value} || ${mlmodel.range}");
-    print(":: ${values}");
+    print(":: ${mlmodel.testname.runtimeType} ${mlmodel.value.runtimeType} ${mlmodel.range.runtimeType}");
 
+    postAnalysisReport(values);
 
-   
-
-
-
-    // for (int i = 0; i < totalPage; i++) {
-    //   for (int j = 0; j <= response['table'][i]['0'].length; j++) {
-    //     print("page $i : ${response['table'][i].length} ");
-    //     if (response['table'][i].length >= 2) {
-    //       if (response['table'][i]['0']["$j"].toString().contains("-") ||
-    //           response['table'][i]['0']["$j"].toString().contains("TEST")) {
-    //       } else {
-    //         print(
-    //             "$i : $j || ${response['table'][i]['0']["${j + 1}"]} = ${response['table'][i]['1']["${j + 1}"]} ");
-    //         if (response['table'][i]['0']["${j + 1}"].length != 0) {
-    //           heading.add(response['table'][i]['0']["${j + 1}"]
-    //               .toString()
-    //               .replaceAll('/n', ''));
-    //           value.add(response['table'][i]['1']["${j + 1}"]);
-    //         }
-
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-    // print(heading);
-    // print(value);
-
-    // MakeOneAttribute(heading, value, fileName);
   }
 
-  MakeOneAttribute(heading, value, fileName) async {
-    List newH = [];
-    List newV = [];
-    List month = [];
-
-    for (int i = 0; i < heading.length; i++) {
-      if (await heading[0].toString() != heading[i].toString()) {
-      } else {
-        newH.add(heading[i]);
-        month.add(i);
-        try {
-          newV.add(double.parse(value[i]));
-        } catch (e) {
-          print(e);
-          break;
-        }
-      }
-    }
-    print("final heading $newH");
-    print("final value $newV");
-
-    if (newV.isNotEmpty) {
-      postAnalysisReport(heading[0], newV, month, fileName);
-    }
-  }
-
-  postAnalysisReport(
-      String title, List value, List month, String reportName) async {
-    var b1 = jsonEncode({
+ 
+  postAnalysisReport(List values) async {
+    var b1 = {
       "id": widget.userid,
-      "title": title,
-      "values": value,
-      "month": month,
-      "reportName": reportName
-    });
+      "results": values
+    };
 
     var h1 = {'Content-Type': 'application/json'};
 
@@ -999,10 +940,12 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     http.Response response = await http.post(
         Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
         body: b1,
-        headers: h1);
+        );
 
     print("Analysis Post report :: ${response.statusCode} | ${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {}
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+    }
   }
 
   Future getPdfAndUpload() async {
@@ -1200,9 +1143,63 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
 //
 //     final model = modelFromJson(jsonString);
 class MLModel {
-  var testname;
-  var value;
-  var range;
+  String testname;
+  String value;
+  String range;
 
   MLModel(this.testname, this.value, this.range);
 }
+
+
+ // MakeOneAttribute(heading, value, fileName) async {
+  //   List newH = [];
+  //   List newV = [];
+  //   List month = [];
+
+  //   for (int i = 0; i < heading.length; i++) {
+  //     if (await heading[0].toString() != heading[i].toString()) {
+  //     } else {
+  //       newH.add(heading[i]);
+  //       month.add(i);
+  //       try {
+  //         newV.add(double.parse(value[i]));
+  //       } catch (e) {
+  //         print(e);
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   print("final heading $newH");
+  //   print("final value $newV");
+
+  //   if (newV.isNotEmpty) {
+  //    // postAnalysisReport(heading[0], newV, month, fileName);
+  //   }
+  // }
+
+
+    // for (int i = 0; i < totalPage; i++) {
+    //   for (int j = 0; j <= response['table'][i]['0'].length; j++) {
+    //     print("page $i : ${response['table'][i].length} ");
+    //     if (response['table'][i].length >= 2) {
+    //       if (response['table'][i]['0']["$j"].toString().contains("-") ||
+    //           response['table'][i]['0']["$j"].toString().contains("TEST")) {
+    //       } else {
+    //         print(
+    //             "$i : $j || ${response['table'][i]['0']["${j + 1}"]} = ${response['table'][i]['1']["${j + 1}"]} ");
+    //         if (response['table'][i]['0']["${j + 1}"].length != 0) {
+    //           heading.add(response['table'][i]['0']["${j + 1}"]
+    //               .toString()
+    //               .replaceAll('/n', ''));
+    //           value.add(response['table'][i]['1']["${j + 1}"]);
+    //         }
+
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+    // print(heading);
+    // print(value);
+
+    // MakeOneAttribute(heading, value, fileName);
