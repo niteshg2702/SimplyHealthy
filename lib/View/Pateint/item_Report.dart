@@ -87,7 +87,7 @@ class _Item_ReportState extends State<Item_Report> {
     }
 
     String csv = const ListToCsvConverter().convert(rows);
-    
+
     Directory? dar = await getExternalStorageDirectory();
     String fullPath = dar!.path;
 
@@ -329,7 +329,7 @@ class _Item_ReportState extends State<Item_Report> {
             children: [Text("-")],
           ),
           Column(
-            children:const[
+            children: const [
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Text("-"),
@@ -337,7 +337,7 @@ class _Item_ReportState extends State<Item_Report> {
             ],
           ),
           Column(
-            children:const [
+            children: const [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("-"),
@@ -357,7 +357,7 @@ class _Item_ReportState extends State<Item_Report> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: Text(response[i]['title']),
+                child: Text(response[i]['title'].toString()),
               )
             ],
           ),

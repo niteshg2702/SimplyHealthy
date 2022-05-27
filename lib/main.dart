@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unused_import
- 
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -18,11 +18,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   preferences = await SharedPreferences.getInstance();
   await Firebase.initializeApp();
-   HttpOverrides.global = new MyHttpOverrides();
-  WidgetsBinding.instance?.addPostFrameCallback((_) {
+  HttpOverrides.global = new MyHttpOverrides();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
     print("WidgetsBinding");
   });
-  SchedulerBinding.instance?.addPostFrameCallback((_) {
+  SchedulerBinding.instance.addPostFrameCallback((_) {
     print("SchedulerBinding");
   });
   runApp(const MyApp());
@@ -47,14 +47,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = ((X509Certificate cert, String host, int port) {
-        final isValidHost = ["54.197.107.221"].contains(host); // <-- allow only hosts in array
+      ..badCertificateCallback =
+          ((X509Certificate cert, String host, int port) {
+        final isValidHost =
+            ["54.197.107.221"].contains(host); // <-- allow only hosts in array
         return isValidHost;
       });
   }
 }
-

@@ -50,8 +50,8 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
         Uri.parse(
             "https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id"),
       );
-      print(
-          "get collection list stscde and response https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id ${response.statusCode} ${response.body}");
+      // print(
+      //     "get collection list stscde and response https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id ${response.statusCode} ${response.body}");
 
       //setState(() {
       var a = jsonDecode(response.body);

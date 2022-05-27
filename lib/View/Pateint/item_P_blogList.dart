@@ -194,7 +194,6 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                                 width: _width * 30,
                                                 fit: BoxFit.cover,
                                               ),
-                                              
                                             ],
                                           )
                                         ],
@@ -308,7 +307,7 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                   style: GoogleFonts.mulish(color: Colors.black, fontSize: 14),
                   textAlign: TextAlign.justify,
                 ),
-               ],
+              ],
             ),
     );
   }

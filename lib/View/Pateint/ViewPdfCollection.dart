@@ -94,7 +94,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       Uri.parse(
           "https://psdfextracter.herokuapp.com/api/v1/views/coll?id=${widget.collectionid}&userid=${widget.userid}"),
     );
-    print(" hello ${response.statusCode} ${response.body}");
+    // print(" hello ${response.statusCode} ${response.body}");
     // if (mounted) {
     //setState(() {
     var a = jsonDecode(response.body);
@@ -901,50 +901,57 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
 
     List temp = [];
     List values = [];
+    List<Map<String, dynamic>> data = [];
     List Ranges = [];
 
     MLModel mlmodel;
 
     for (int i = 0; i < totalPage; i++) {
       response['table'][i]['1'].entries.map((e) {
-        //print(i);
-        if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().length != 0) {
-          values.add(MLModel(
-              response['table'][i]['0'][e.key]
-                  .replaceAll(RegExp('[^A-Za-z]'), '')
-                  .toString(),
-              e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
-              response['table'][i]['2'][e.key]));
+        if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().isNotEmpty) {
+          if (response['table'][i]['0'][(e.key).toString()]
+              .replaceAll(RegExp('[^A-Za-z]'), '')
+              .toString()
+              .trim()
+              .isNotEmpty) {
+            values.add(
+              MLModel(
+                response['table'][i]['0'][(e.key).toString()]
+                    .replaceAll(RegExp('[^A-Za-z]'), '')
+                    .toString(),
+                e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
+                // response['table'][i]['2'][e.key],
+              ),
+            );
+          }
         }
       }).toList();
     }
 
-    mlmodel = values[0];
-    print("${mlmodel.testname} || ${mlmodel.value} || ${mlmodel.range}");
-    print(":: ${mlmodel.testname.runtimeType} ${mlmodel.value.runtimeType} ${mlmodel.range.runtimeType}");
+    for (MLModel element in values) {
+      data.add(element.toJson());
+    }
 
-    postAnalysisReport(values);
-
+    postAnalysisReport(data);
   }
 
- 
   postAnalysisReport(List values) async {
-    var b1 = {
-      "id": widget.userid,
+    Map<String, dynamic> b1 = {
+      "id": widget.userid.toString(),
       "results": values
     };
 
     var h1 = {'Content-Type': 'application/json'};
 
-    print("send body for post report $b1");
     http.Response response = await http.post(
-        Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
-        body: b1,
-        );
+      Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
+      headers: h1,
+      body: jsonEncode(b1),
+    );
 
     print("Analysis Post report :: ${response.statusCode} | ${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-
+      Fluttertoast.showToast(msg: 'Report Generated Successfully');
     }
   }
 
@@ -1145,9 +1152,14 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
 class MLModel {
   String testname;
   String value;
-  String range;
+  // String range;
 
-  MLModel(this.testname, this.value, this.range);
+  MLModel(this.testname, this.value);
+
+  Map<String, dynamic> toJson() => {
+        'testname': testname,
+        'value': value,
+      };
 }
 
 
