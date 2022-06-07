@@ -15,7 +15,6 @@ import '/View/log_in.dart';
 import 'package:http/http.dart' as http;
 import '/main.dart';
 
-
 class HomeScreenPateint extends StatefulWidget {
   const HomeScreenPateint({Key? key, required this.id}) : super(key: key);
 
@@ -73,7 +72,7 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
       setState(() {
         totalUser = userList['data'].length;
       });
-      //print("${jsonDecode(response.body)}");
+      print("${jsonDecode(response.body)}");
     }
 
     return userList;
@@ -91,7 +90,7 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
       "img_link": avatar
     });
 
-   // print("${body}");
+    // print("${body}");
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
@@ -167,6 +166,8 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                                   width: _width * 90,
                                   child: InkWell(
                                     onTap: () {
+                                      print(
+                                          "!!@@ ${userList['data'][index]['name']}");
                                       isFirstUser!
                                           ? Navigator.push(
                                               context,

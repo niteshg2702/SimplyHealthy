@@ -206,12 +206,12 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
                                                     ['name'],
                                                 //"Dr. Gaurav Bhardwaj M.D (Dermatologist)",
                                                 style: GoogleFonts.mulish(
-                                                    fontSize: 15,
+                                                    fontSize: 18,
                                                     color: Colors.black,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
-                                              SizedBox(height: 10),
+                                              Divider(),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -222,96 +222,108 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
                                                     child: Image.asset(
                                                         "assets/dr.png"),
                                                   ),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "contact no: ${snapshot.data['contacts'][index]['mobile']}",
-                                                        //"Dermatologist (10 years)",
-                                                        style:
-                                                            GoogleFonts.mulish(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .grey[500],
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                      ),
-                                                      Text(
-                                                        "${snapshot.data['contacts'][index]['email']}",
-                                                        //"Consultation Fee: 800 rs",
-                                                        style:
-                                                            GoogleFonts.mulish(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .grey[500],
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          PDFApi pdfApi =
-                                                              PDFApi();
-                                                          pdfApi.ShareWithDoctor(
-                                                                  1,
-                                                                  widget
-                                                                      .patient_name,
-                                                                  widget
-                                                                      .pdfname,
-                                                                  widget.pdfurl)
-                                                              .then((value) {
-                                                            if (value == 200 ||
-                                                                value == 201) {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const ShareSucessScreen()),
-                                                              );
-                                                            }
-                                                          });
-
-                                                          // Navigator.push(
-                                                          //   context,
-                                                          //   MaterialPageRoute(
-                                                          //       builder: (context) =>
-                                                          //           const Recommandation()),
-                                                          // );
-                                                        },
-                                                        child: Container(
-                                                          height: _height * 5,
-                                                          width: _width * 45,
-                                                          decoration: BoxDecoration(
-                                                              color:
-                                                                  Colors.blue,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                          child: Center(
-                                                            child: Text(
-                                                              "share",
-                                                              style: GoogleFonts.mulish(
-                                                                  fontSize: 15,
-                                                                  color: white,
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Flexible(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "contact no: ${snapshot.data['contacts'][index]['mobile']}",
+                                                          //"Dermatologist (10 years)",
+                                                          style: GoogleFonts
+                                                              .mulish(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      500],
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
+                                                        ),
+                                                        Text(
+                                                          "${snapshot.data['contacts'][index]['email']}",
+                                                          //"Consultation Fee: 800 rs",
+                                                          style: GoogleFonts
+                                                              .mulish(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      500],
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            PDFApi pdfApi =
+                                                                PDFApi();
+                                                            pdfApi.ShareWithDoctor(
+                                                                    snapshot.data['contacts'][index]['id'],
+                                                                    widget
+                                                                        .patient_name,
+                                                                    widget
+                                                                        .pdfname,
+                                                                    widget
+                                                                        .pdfurl)
+                                                                .then((value) {
+                                                              if (value ==
+                                                                      200 ||
+                                                                  value ==
+                                                                      201) {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const ShareSucessScreen()),
+                                                                );
+                                                              }
+                                                            });
+
+                                                            // Navigator.push(
+                                                            //   context,
+                                                            //   MaterialPageRoute(
+                                                            //       builder: (context) =>
+                                                            //           const Recommandation()),
+                                                            // );
+                                                          },
+                                                          child: Container(
+                                                            height: _height * 5,
+                                                            width: _width * 45,
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    Colors.blue,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "share",
+                                                                style: GoogleFonts.mulish(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color:
+                                                                        white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   )
                                                 ],
                                               )

@@ -202,35 +202,49 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                                                 Container(
                                                   height: 160,
                                                   width: 130,
-                                                  child: SfPdfViewer.network(
-                                                    snapshot.data['list'][index]
-                                                        ['url'],
-                                                    //  SfPdfViewer.network(
-                                                    //   "https://firebasestorage.googleapis.com/v0/b/doctorapp-2664c.appspot.com/o/%5BCyber%20Sanjivani%20Quiz%20Certificate.pdf%5D?alt=media&token=b4d493f5-3916-4172-b63e-42a354a38b23",
-                                                    //key: pdfKey,
-                                                    pageSpacing: 0,
-                                                    enableDoubleTapZooming:
-                                                        false,
-                                                    initialZoomLevel: 10,
+                                                  child: Text(""),
+                                                  // SfPdfViewer.network(
+                                                  //   snapshot.data['list'][index]
+                                                  //       ['url'],
+                                                  //   //  SfPdfViewer.network(
+                                                  //   //   "https://firebasestorage.googleapis.com/v0/b/doctorapp-2664c.appspot.com/o/%5BCyber%20Sanjivani%20Quiz%20Certificate.pdf%5D?alt=media&token=b4d493f5-3916-4172-b63e-42a354a38b23",
+                                                  //   //key: pdfKey,
+                                                  //   pageSpacing: 0,
+                                                  //   enableDoubleTapZooming:
+                                                  //       false,
+                                                  //   initialZoomLevel: 10,
 
-                                                    canShowScrollHead: false,
-                                                    canShowScrollStatus: false,
-                                                    canShowPaginationDialog:
-                                                        false,
-                                                  ),
-                                                  // child: Image.asset(
-                                                  //   "assets/pdf.png",
-                                                  //   scale: 3.5,
+                                                  //   canShowScrollHead: false,
+                                                  //   canShowScrollStatus: false,
+                                                  //   canShowPaginationDialog:
+                                                  //       false,
                                                   // ),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(25),
-                                                    topRight:
-                                                        Radius.circular(25),
-                                                  )),
+                                                  // // child: Image.asset(
+                                                  // //   "assets/pdf.png",
+                                                  // //   scale: 3.5,
+                                                  // // ),
+                                                  decoration: BoxDecoration(
+                                                      // color: Colors.black87
+                                                      //     .withOpacity(0.8),
+                                                      image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          // colorFilter:
+                                                          //     ColorFilter.mode(
+                                                          //         Colors
+                                                          //             .black54
+                                                          //             .withOpacity(
+                                                          //                 0.8),
+                                                          //         BlendMode
+                                                          //             .dstATop),
+                                                          image: const AssetImage(
+                                                              "assets/reports.jpg")),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(25),
+                                                        topRight:
+                                                            Radius.circular(25),
+                                                      )),
                                                 ),
                                                 const SizedBox(
                                                   width: 10,
@@ -405,153 +419,6 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                                 );
                               }
                             }),
-                        // ListView.builder(
-                        //     physics: BouncingScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     itemCount: map['l_list'].length,
-                        //     itemBuilder: (BuildContext context, int index) {
-                        //       return Padding(
-                        //         padding: const EdgeInsets.symmetric(
-                        //             horizontal: 10, vertical: 0),
-                        //         child: Card(
-                        //           elevation: 5,
-                        //           child: Container(
-                        //             margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        //             child: Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Container(
-                        //                   height: 160,
-                        //                   width: 130,
-                        //                   child: SfPdfViewer.file(
-                        //                     map['l_list'][index]['path'],
-                        //                     //  SfPdfViewer.network(
-                        //                     //   "https://firebasestorage.googleapis.com/v0/b/doctorapp-2664c.appspot.com/o/%5BCyber%20Sanjivani%20Quiz%20Certificate.pdf%5D?alt=media&token=b4d493f5-3916-4172-b63e-42a354a38b23",
-                        //                     //key: pdfKey,
-                        //                     pageSpacing: 0,
-                        //                     enableDoubleTapZooming: false,
-                        //                     initialZoomLevel: 10,
-                        //                     canShowScrollHead: false,
-                        //                     canShowScrollStatus: false,
-                        //                     canShowPaginationDialog: false,
-                        //                   ),
-                        //                   // child: Image.asset(
-                        //                   //   "assets/pdf.png",
-                        //                   //   scale: 3.5,
-                        //                   // ),
-                        //                   decoration: const BoxDecoration(
-                        //                       borderRadius: BorderRadius.only(
-                        //                     topLeft: Radius.circular(25),
-                        //                     topRight: Radius.circular(25),
-                        //                   )),
-                        //                 ),
-                        //                 const SizedBox(
-                        //                   width: 10,
-                        //                 ),
-                        //                 Column(
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Text(
-                        //                       map['l_list'][index]['name'],
-                        //                       style: GoogleFonts.poppins(
-                        //                           fontSize: 16,
-                        //                           color: Colors.grey[800],
-                        //                           fontWeight: FontWeight.normal),
-                        //                     ),
-                        //                     Text(
-                        //                       DateFormat('dd/MM/yyyy')
-                        //                           .format(DateTime.now()),
-                        //                       style: GoogleFonts.poppins(
-                        //                           fontSize: 12,
-                        //                           color: Colors.grey[500],
-                        //                           fontWeight: FontWeight.normal),
-                        //                     ),
-                        //                     SizedBox(height: _height * 8),
-                        //                     Row(
-                        //                       children: [
-                        //                         InkWell(
-                        //                           onTap: () {
-                        //                             //sendEmail();
-                        //                           },
-                        //                           child: Icon(
-                        //                             Icons.photo_album_outlined,
-                        //                             color: Colors.grey[500],
-                        //                             size: 26,
-                        //                           ),
-                        //                         ),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         InkWell(
-                        //                           onTap: () {
-                        //                             //shareEmail();
-                        //                           },
-                        //                           child: Icon(
-                        //                             Icons.download,
-                        //                             color: Colors.grey[500],
-                        //                             size: 24,
-                        //                           ),
-                        //                         ),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         InkWell(
-                        //                           onTap: () {
-                        //                             downloadPDF(
-                        //                                     map['l_list'][index]
-                        //                                         ['link'],
-                        //                                     map['l_list'][index]
-                        //                                         ['name'])
-                        //                                 .then((value) {
-                        //                               ShareDialog(value);
-                        //                             });
-                        //                           },
-                        //                           child: Icon(
-                        //                             Icons.share,
-                        //                             color: Colors.grey[500],
-                        //                             size: 26,
-                        //                           ),
-                        //                         ),
-                        //                       ],
-                        //                     )
-                        //                   ],
-                        //                 ),
-                        //                 const Flexible(
-                        //                   child: SizedBox(),
-                        //                   fit: FlexFit.tight,
-                        //                 ),
-                        //                 PopupMenuButton<String>(
-                        //                   padding:
-                        //                       EdgeInsets.fromLTRB(00, 0, 5, 50),
-                        //                   onSelected: (value) {
-                        //                     switch (value) {
-                        //                       case 'Delete':
-                        //                         break;
-                        //                       case 'Rename':
-                        //                         break;
-                        //                     }
-                        //                   },
-                        //                   iconSize: 20,
-                        //                   splashRadius: 10,
-                        //                   itemBuilder: (BuildContext context) {
-                        //                     return {'Delete', 'Rename'}
-                        //                         .map((String choice) {
-                        //                       return PopupMenuItem<String>(
-                        //                         value: choice,
-                        //                         child: Text(choice),
-                        //                       );
-                        //                     }).toList();
-                        //                   },
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       );
-                        //     }),
-
                         SizedBox(
                           height: 40,
                         ),
@@ -820,7 +687,6 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                           return;
                         } else {
                           formGlobalKey.currentState!.save();
-
                           if (widget.mode == "new") {
                             Navigator.pop(context);
                             Navigator.pop(context);
@@ -907,32 +773,38 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     MLModel mlmodel;
 
     for (int i = 0; i < totalPage; i++) {
-      response['table'][i]['1'].entries.map((e) {
-        if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().isNotEmpty) {
-          if (response['table'][i]['0'][(e.key).toString()]
-              .replaceAll(RegExp('[^A-Za-z]'), '')
-              .toString()
-              .trim()
-              .isNotEmpty) {
-            values.add(
-              MLModel(
-                response['table'][i]['0'][(e.key).toString()]
-                    .replaceAll(RegExp('[^A-Za-z]'), '')
-                    .toString(),
-                e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
-                // response['table'][i]['2'][e.key],
-              ),
-            );
+      if (response['table'][i].length >= 2) {
+        response['table'][i]['1'].entries.map((e) {
+          if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().isNotEmpty) {
+            if (response['table'][i]['0'][(e.key).toString()]
+                .replaceAll(RegExp('[^A-Za-z]'), '')
+                .toString()
+                .trim()
+                .isNotEmpty) {
+              values.add(
+                MLModel(
+                  response['table'][i]['0'][(e.key).toString()]
+                      .replaceAll(RegExp('[^A-Za-z]'), '')
+                      .toString()
+                      .toUpperCase(),
+                  e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
+                  // response['table'][i]['2'][e.key],
+                ),
+              );
+            }
           }
-        }
-      }).toList();
+        }).toList();
+      }
     }
-
+    MLModel m = values[0];
+    print(m.testname);
+    print(m.value);
     for (MLModel element in values) {
       data.add(element.toJson());
     }
-
-    postAnalysisReport(data);
+    if (data.isNotEmpty) {
+      postAnalysisReport(data);
+    }
   }
 
   postAnalysisReport(List values) async {
@@ -943,6 +815,8 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
 
     var h1 = {'Content-Type': 'application/json'};
 
+    print("what we are sending 1 $values");
+
     http.Response response = await http.post(
       Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
       headers: h1,
@@ -950,7 +824,9 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     );
 
     print("Analysis Post report :: ${response.statusCode} | ${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 202) {
       Fluttertoast.showToast(msg: 'Report Generated Successfully');
     }
   }

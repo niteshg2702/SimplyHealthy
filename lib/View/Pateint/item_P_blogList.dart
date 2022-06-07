@@ -30,7 +30,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
   BlogApi blogApi = BlogApi();
   String desc =
       "f Minister Uddhav Thackeray is likely to take a final decision on reimposing lockdown after a cabinet meeting on April 14......";
-  String blogurl = "https://psdfextracter.herokuapp.com/api/v1/views/blogs";
+  String blogurl = "https://pdf-kylo.herokuapp.com/api/v1/views/blogs";
   List<Category> category = <Category>[
     Category('All Blogs', true),
   ];
@@ -112,11 +112,11 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                   .toString()
                                   .contains("All Blogs")) {
                                 blogurl =
-                                    "https://psdfextracter.herokuapp.com/api/v1/views/blogs";
+                                    "https://pdf-kylo.herokuapp.com/api/v1/views/blogs";
                               } else {
                                 setState(() {
                                   blogurl =
-                                      "https://psdfextracter.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
+                                      "https://pdf-kylo.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
                                 });
                               }
                             });

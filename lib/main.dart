@@ -19,12 +19,12 @@ Future<void> main() async {
   preferences = await SharedPreferences.getInstance();
   await Firebase.initializeApp();
   HttpOverrides.global = new MyHttpOverrides();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    print("WidgetsBinding");
-  });
-  SchedulerBinding.instance.addPostFrameCallback((_) {
-    print("SchedulerBinding");
-  });
+  // WidgetsBinding.instance?.addPostFrameCallback((_) {
+  //   print("WidgetsBinding");
+  // });
+  // SchedulerBinding.instance?.addPostFrameCallback((_) {
+  //   print("SchedulerBinding");
+  // });
   runApp(const MyApp());
 }
 

@@ -5,6 +5,7 @@ import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -105,6 +106,7 @@ class _Item_ReportState extends State<Item_Report> {
         .ref()
         .child('CSV/${widget.id}/filename${widget.id}')
         .putFile(f);
+    Fluttertoast.showToast(msg: "Reports confirmed by user");
   }
 
   @override
@@ -129,7 +131,7 @@ class _Item_ReportState extends State<Item_Report> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      label: Text(
+                      label: const Text(
                         "Confirm Report",
                         style: TextStyle(fontSize: 15),
                       ),
@@ -168,9 +170,9 @@ class _Item_ReportState extends State<Item_Report> {
                         ],
                       );
                     } else if (snapshot.hasError) {
-                      return Text("hello");
+                      return Text("unable to fetch detail");
                     } else {
-                      return Text("Loading...");
+                      return Text("");
                     }
                   }),
               // FutureBuilder(
@@ -183,7 +185,6 @@ class _Item_ReportState extends State<Item_Report> {
               //             itemCount: snapshot.data['list'].length,
               //             itemBuilder: (BuildContext context, int index) {
               //               List<_SalesData> l = [];
-
               //               for (int i = 0;
               //                   i < snapshot.data['list'][index]['values'].length;
               //                   i++) {
@@ -197,7 +198,6 @@ class _Item_ReportState extends State<Item_Report> {
               //                         .toString(),
               //                     d));
               //               }
-
               //               return Column(
               //                 children: [
               //                   SfCartesianChart(

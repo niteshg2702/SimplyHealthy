@@ -15,6 +15,7 @@ class Auth {
       "email": email,
       "password": pwd,
       "role": role
+      // "speciality":
     });
 
     var headers = {'content-Type': 'application/json'};

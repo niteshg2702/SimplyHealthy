@@ -163,7 +163,7 @@ class _BlogState extends State<Blog> {
                                                             image: snapshot.data['data']
                                                                 [index]['img'],
                                                             readingTime: snapshot.data['data']
-                                                                [index]['id'].toString(),
+                                                                [index]['reading_time'].toString(),
                                                             heading: snapshot.data['data']
                                                                     [index]
                                                                 ['title'],
@@ -255,7 +255,7 @@ class _BlogState extends State<Blog> {
                                                                     readingTime:
                                                                         snapshot.data['data'][index]
                                                                             [
-                                                                            'id'].toString(),
+                                                                            'reading_time'].toString(),
                                                                     title: snapshot.data['data']
                                                                             [
                                                                             index]

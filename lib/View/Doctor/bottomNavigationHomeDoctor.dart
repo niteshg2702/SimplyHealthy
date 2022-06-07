@@ -26,7 +26,7 @@ class _BottomNavigationHomePageState extends State<BottomNavigationHomePage> {
   @override
   Widget build(BuildContext context) {
     final _pageOptions = [
-      ItemDReport(),
+      ItemDReport(id: widget.id,),
       Blog(
         id: widget.id,
       )
