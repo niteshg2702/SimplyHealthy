@@ -35,7 +35,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
   BlogApi blogApi = BlogApi();
   String desc =
       "f Minister Uddhav Thackeray is likely to take a final decision on reimposing lockdown after a cabinet meeting on April 14......";
-  String blogurl = "https://psdfextracter.herokuapp.com/api/v1/views/blogs";
+  String blogurl = "https://pdf-extractor-new.herokuapp.com/api/v1/views/blogs";
   List<Category> category = <Category>[
     Category('All Doctors', true),
   ];
@@ -47,7 +47,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf-extractor-new.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -65,7 +65,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
 
   Future getDoctorList() async {
     http.Response response = await http.get(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/views/contact"));
+        Uri.parse("https://pdf-extractor-new.herokuapp.com/api/v1/views/contact"));
 
     if (response.statusCode == 200 || response.statusCode == 201) {
     } else {}
@@ -140,11 +140,11 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
                     //                       .toString()
                     //                       .contains("All Blogs")) {
                     //                     blogurl =
-                    //                         "https://psdfextracter.herokuapp.com/api/v1/views/blogs";
+                    //                         "https://pdf-extractor-new.herokuapp.com/api/v1/views/blogs";
                     //                   } else {
                     //                     setState(() {
                     //                       blogurl =
-                    //                           "https://psdfextracter.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
+                    //                           "https://pdf-extractor-new.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
                     //                     });
                     //                   }
                     //                 });

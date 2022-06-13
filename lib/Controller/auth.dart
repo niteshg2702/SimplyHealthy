@@ -8,15 +8,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 class Auth {
   final baseurl = "https://psdfextracter.herokuapp.com";
 
-  Future createUser(name, mobileNo, pwd, email, role) async {
-    var body = jsonEncode({
-      "username": name,
-      "mobile": mobileNo,
-      "email": email,
-      "password": pwd,
-      "role": role
-      // "speciality":
-    });
+  Future createUser(name, mobileNo, pwd, email, role, speciality) async {
+    var body = role == "doctor"
+        ? jsonEncode({
+            "username": name,
+            "mobile": mobileNo,
+            "email": email,
+            "password": pwd,
+            "role": role,
+            "specialty": speciality
+          })
+        : jsonEncode({
+            "username": name,
+            "mobile": mobileNo,
+            "email": email,
+            "password": pwd,
+            "role": role
+          });
 
     var headers = {'content-Type': 'application/json'};
 
@@ -25,7 +33,7 @@ class Auth {
         body: body,
         headers: headers);
 
-    print("craete user  ${response.body}");
+    print("craete user  $body");
     if (response.statusCode == 201 || response.statusCode == 200) {
       var a = jsonDecode(response.body);
       Fluttertoast.showToast(msg: "User Created ${a['user']['id']}");

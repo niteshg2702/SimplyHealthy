@@ -19,7 +19,7 @@ class BottomNavigationHomePage extends StatefulWidget {
 }
 
 class _BottomNavigationHomePageState extends State<BottomNavigationHomePage> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   String desc =
       "f Minister Uddhav Thackeray is likely to take a final decision on reimposing lockdown after a cabinet meeting on April 14......";

@@ -1,14 +1,18 @@
 // ignore_for_file: file_names
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../Colors/Colors.dart';
 import '/Controller/auth.dart';
 import '/Controller/sharedPreferance.dart';
 import '/View/SignUpTwo.dart';
 import '/View/welcome.dart';
 import '/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Sign_Up extends StatefulWidget {
   const Sign_Up({Key? key}) : super(key: key);
@@ -27,6 +31,30 @@ class _Sign_UpState extends State<Sign_Up> {
   int _radioSelected = 1;
   String role = "patient";
   bool isLoading = false;
+
+  List<dynamic> _category = ['Cardiyplogy']; // Option 2
+  String _selectedCategory = 'Cardiyology';
+
+  void initState() {
+    getAllCategory();
+    super.initState();
+  }
+
+  Future getAllCategory() async {
+    http.Response response = await http.get(Uri.parse(
+        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+
+    print("${response.statusCode} ${response.body}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var d = jsonDecode(response.body);
+      setState(() {
+        _category = d['catagories'];
+        _selectedCategory = d['catagories'][0];
+      });
+    }
+    print("category ${_category}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,43 +151,6 @@ class _Sign_UpState extends State<Sign_Up> {
                     SizedBox(
                       height: 20,
                     ),
-                    // TextFormField(
-                    //   //initialValue: name,
-                    //   keyboardType: TextInputType.phone,
-                    //   textAlign: TextAlign.start,
-                    //   style: GoogleFonts.montserrat(
-                    //       fontSize: 18, color: Colors.black),
-                    //   validator: (value) {
-                    //     if (value!.length != 10) {
-                    //       return "Please Enter Valid Phone No";
-                    //     } else {
-                    //       return null;
-                    //     }
-                    //   },
-                    //   onChanged: (value) => setState(() {
-                    //     this.mobileno = value;
-                    //   }),
-                    //   decoration: InputDecoration(
-                    //     filled: true,
-                    //     fillColor: Colors.white,
-                    //     hintText: "Enter Mobile Number",
-                    //     isDense: true,
-                    //     contentPadding: EdgeInsets.all(13),
-                    //     hintStyle: GoogleFonts.montserrat(
-                    //       fontSize: 18,
-                    //       color: Colors.grey,
-                    //     ),
-                    //     errorStyle: TextStyle(color: Colors.white, height: 1),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.white),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       //borderSide:  BorderSide(color: textFieldColor),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //   ),
-                    // ),
 
                     TextFormField(
                       //initialValue: name,
@@ -201,116 +192,55 @@ class _Sign_UpState extends State<Sign_Up> {
                         ),
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // TextFormField(
-                    //   //initialValue: name,
-                    //   obscureText: false,
-                    //   obscuringCharacter: "*",
-                    //   keyboardType: TextInputType.visiblePassword,
-                    //   textAlign: TextAlign.start,
-                    //   style: GoogleFonts.montserrat(
-                    //       fontSize: 18, color: Colors.black),
-                    //   validator: (value) {
-                    //     //    String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-                    //     // RegExp regExp = new RegExp(pattern);
-                    //     // if (!regExp.hasMatch(value!)) {
-                    //     //   return "1-uppercase,1-lowercase,min. 1 number,min 1 special character";
-                    //     // } else {
-                    //     //   return null;
-                    //     // }
-
-                    //     if (value!.length < 8) {
-                    //       return "Please Enter Valid Password";
-                    //     } else {
-                    //       return null;
-                    //     }
-                    //   },
-                    //   onChanged: (value) => setState(() {
-                    //     this.password = value;
-                    //   }),
-                    //   decoration: InputDecoration(
-                    //     filled: true,
-                    //     fillColor: Colors.white,
-                    //     prefixIconConstraints: BoxConstraints(maxWidth: 50),
-                    //     prefixIcon: const Center(
-                    //         //padding: const EdgeInsets.fromLTRB(10,12, 10,12),
-                    //         child: Icon(
-                    //       Icons.lock_open,
-                    //       size: 20,
-                    //     )),
-                    //     hintText: "Enter password ",
-                    //     isDense: true,
-                    //     errorStyle:
-                    //         TextStyle(color: Colors.white, height: 1),
-                    //     contentPadding: EdgeInsets.all(13),
-                    //     hintStyle: GoogleFonts.montserrat(
-                    //       fontSize: 18,
-                    //       color: Colors.grey,
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.white),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       //borderSide:  BorderSide(color: textFieldColor),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                    // TextFormField(
-                    //   //initialValue: name,
-                    //   obscureText: false,
-                    //   obscuringCharacter: "*",
-
-                    //   keyboardType: TextInputType.visiblePassword,
-                    //   textAlign: TextAlign.start,
-                    //   style: GoogleFonts.montserrat(
-                    //       fontSize: 18, color: Colors.black),
-                    //   validator: (value) {
-                    //     if (value != password) {
-                    //       return "password do not match    ";
-                    //     } else {
-                    //       return null;
-                    //     }
-                    //   },
-                    //   onChanged: (value) => setState(() {
-                    //     this.confirmpassword = value;
-                    //   }),
-
-                    //   decoration: InputDecoration(
-                    //     filled: true,
-                    //     fillColor: Colors.white,
-                    //     prefixIconConstraints: BoxConstraints(maxWidth: 50),
-                    //     prefixIcon: const Center(
-                    //         //padding: const EdgeInsets.fromLTRB(10,12, 10,12),
-                    //         child: Icon(
-                    //       Icons.lock,
-                    //       size: 20,
-                    //     )),
-                    //     errorStyle:
-                    //         TextStyle(color: Colors.white, height: 1),
-                    //     hintText: "Enter confrim password",
-                    //     isDense: true,
-                    //     contentPadding: EdgeInsets.all(13),
-                    //     hintStyle: GoogleFonts.montserrat(
-                    //       fontSize: 18,
-                    //       color: Colors.grey,
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.white),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       //borderSide:  BorderSide(color: textFieldColor),
-                    //       borderRadius: BorderRadius.circular(6),
-                    //     ),
-                    //   ),
-                    // ),
+                    _radioSelected == 2
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: DropdownButtonFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: col6,
+                                isDense: true,
+                                contentPadding: EdgeInsets.all(10),
+                                hintStyle: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: col3,
+                                    fontWeight: FontWeight.w500),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(color: col3),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: textFieldColor),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                              ),
+                              dropdownColor: col6,
+                              focusColor: col5,
+                              hint: const Text(
+                                  'Select Category'), // Not necessary for Option 1
+                              value: _selectedCategory,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedCategory = newValue.toString();
+                                });
+                              },
+                              items: _category.map((gender) {
+                                return DropdownMenuItem(
+                                  child: Text(
+                                    gender,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  value: gender,
+                                );
+                              }).toList(),
+                            ),
+                          )
+                        : Text(""),
+                   
                     const SizedBox(
                       height: 8,
                     ),
@@ -367,46 +297,17 @@ class _Sign_UpState extends State<Sign_Up> {
                                     return;
                                   } else {
                                     formGlobalKey.currentState!.save();
-                                    // setState(() {
-                                    //   isLoading = true;
-                                    // });
-                                    // print(
-                                    //     "$name $mobileno $password $confirmpassword $role ");
-                                    // Auth auth = Auth();
-                                    // int mobileNo = int.parse(mobileno!);
-                                    // assert(mobileNo is int);
-                                    // auth
-                                    //     .createUser(name, mobileNo,
-                                    //         confirmpassword, email, role)
-                                    //     .then((value) {
-                                    //   if (value == 200 || value == 201) {
-                                    //     preferences?.setBool(
-                                    //         QuestionSharedpreferance
-                                    //             .isFirstTimeUser,
-                                    //         true);
-                                    //     print(
-                                    //         "sat first user ${preferences?.getBool(QuestionSharedpreferance.isFirstTimeUser)}");
-                                    //     Navigator.pushAndRemoveUntil(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (context) =>
-                                    //                 welcome()),
-                                    //         (route) => false);
-                                    //     setState(() {
-                                    //       isLoading = false;
-                                    //     });
-                                    //   } else {
-                                    //     Navigator.pop(context);
-                                    //     setState(() {
-                                    //       isLoading = false;
-                                    //     });
-                                    //   }
-                                    // });
+                                    
 
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignUpTwo(name: name, email: email,role: role,)),
+                                          builder: (context) => SignUpTwo(
+                                                name: name,
+                                                email: email,
+                                                role: role,
+                                                specialty:_selectedCategory
+                                              )),
                                     );
                                   }
                                 },

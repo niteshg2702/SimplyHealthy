@@ -20,18 +20,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class OTPSIGNUP extends StatefulWidget {
-  const OTPSIGNUP(
-      {Key? key,
-      required this.phoneNo,
-      required this.email,
-      required this.name,
-      required this.role})
-      : super(key: key);
+  const OTPSIGNUP({
+    Key? key,
+    required this.phoneNo,
+    required this.email,
+    required this.name,
+    required this.role,
+    required this.specialty,
+  }) : super(key: key);
 
   final dynamic phoneNo;
   final dynamic name;
   final dynamic email;
   final dynamic role;
+  final dynamic specialty;
   @override
   State<OTPSIGNUP> createState() => _OTPSIGNUPState();
 }
@@ -286,7 +288,7 @@ class _OTPSIGNUPState extends State<OTPSIGNUP> {
         Auth auth = Auth();
         auth
             .createUser(
-                widget.name, mobileNo, "plplpl00", widget.email, widget.role)
+                widget.name, mobileNo, "plplpl00", widget.email, widget.role , widget.specialty)
             .then((value) {
           if (value == 200 || value == 201) {
             preferences?.setBool(
@@ -307,15 +309,14 @@ class _OTPSIGNUPState extends State<OTPSIGNUP> {
             });
           }
         });
-      }else{
+      } else {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
       }
     }).catchError((e) {
-      
       Fluttertoast.showToast(msg: "OTP is wrong");
-      
+
       print(e.toString());
     });
   }

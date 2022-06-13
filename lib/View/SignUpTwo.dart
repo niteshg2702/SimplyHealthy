@@ -11,12 +11,17 @@ import '/main.dart';
 
 class SignUpTwo extends StatefulWidget {
   const SignUpTwo(
-      {Key? key, required this.name, required this.email, required this.role})
+      {Key? key,
+      required this.name,
+      required this.email,
+      required this.role,
+      required this.specialty})
       : super(key: key);
 
   final dynamic name;
   final dynamic email;
   final dynamic role;
+  final dynamic specialty;
   @override
   State<SignUpTwo> createState() => _SignUpTwoState();
 }
@@ -199,7 +204,8 @@ class _SignUpTwoState extends State<SignUpTwo> {
                                               phoneNo: mobileno!,
                                               email: widget.email,
                                               name: widget.name,
-                                              role: widget.role)),
+                                              role: widget.role,
+                                              specialty: widget.specialty,)),
                                     );
                                   }
                                 },

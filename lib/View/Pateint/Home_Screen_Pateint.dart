@@ -142,11 +142,7 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                       ),
                     ]),
               ),
-              // Expanded(
-              //   child: GetX<UserProfile>(builder: (c) {
-              //     return Text("${c.name}");
-              //   }),
-              // ),
+              
               Expanded(
                   child: SingleChildScrollView(
                       child: Column(

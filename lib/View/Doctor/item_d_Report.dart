@@ -14,7 +14,8 @@ class ItemDReport extends StatefulWidget {
   @override
   State<ItemDReport> createState() => _ItemDReportState();
 }
-// https://psdfextracter.herokuapp.com/api/v1/views/portal?id=${widget.id} 
+
+// https://psdfextracter.herokuapp.com/api/v1/views/portal?id=${widget.id}
 class _ItemDReportState extends State<ItemDReport> {
   Future GetReportList() async {
     http.Response response = await http.get(Uri.parse(
@@ -47,7 +48,7 @@ class _ItemDReportState extends State<ItemDReport> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Share on portal",
+                        "Shared with me ",
                         style: GoogleFonts.mulish(
                             fontSize: 20,
                             color: Colors.black,
@@ -100,13 +101,28 @@ class _ItemDReportState extends State<ItemDReport> {
                                       child: Container(
                                         margin: EdgeInsets.all(10),
                                         child: Column(children: [
-                                          Text(
-                                            map['list'][index]['patientname'],
-                                            //"Dr. Gaurav Bhardwaj M.D. (Dermatologist)",
-                                            style: GoogleFonts.mulish(
-                                                fontSize: 18,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                map['list'][index]
+                                                    ['patientname'],
+                                                //"Dr. Gaurav Bhardwaj M.D. (Dermatologist)",
+                                                style: GoogleFonts.mulish(
+                                                    fontSize: 18,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              InkWell(
+                                                onTap: () {},
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red[800],
+                                                ),
+                                              )
+                                            ],
                                           ),
                                           Divider(),
                                           Row(
