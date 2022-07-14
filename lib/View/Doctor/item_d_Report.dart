@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simplyhealthy/Colors/Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:simplyhealthy/View/Pateint/PDFViewer.dart';
+import 'package:intl/intl.dart';
 
 class ItemDReport extends StatefulWidget {
   const ItemDReport({Key? key, required this.id}) : super(key: key);
@@ -19,7 +20,7 @@ class ItemDReport extends StatefulWidget {
 class _ItemDReportState extends State<ItemDReport> {
   Future GetReportList() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/portal?id=${widget.id}"));
+        "https://pdf00.herokuapp.com/api/v1/views/portal?id=${widget.id}"));
 
     if (response.statusCode == 200 || response.statusCode == 201) {
     } else {}
@@ -81,13 +82,25 @@ class _ItemDReportState extends State<ItemDReport> {
                       future: GetReportList(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         Map map;
-                        if (i == 0) {
-                          map = {"list": []};
-                          map.addEntries({});
-                        } else {
-                          map = snapshot.data;
+                        map = {"list": []};
+                        if(snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }else if(snapshot.hasData) {
+                          if (i == 0) {
+                            snapshot.data["list"].forEach((e){
+                              DateTime tempdate = DateFormat('EEE, dd MMM yyyy hh:mm:ss').parse(e["created_at"]);
+                              tempdate.add(Duration(hours: 5, minutes: 30));
+                              if(tempdate.difference(DateTime.now()).inHours < 24){
+                                map["list"].add(e);
+                              }
+                            });
+                          } else {
+                            map = snapshot.data;
+                          }
                         }
-                        if (snapshot.hasData) {
+                        if(map["list"].length == 0) {
+                          return CircularProgressIndicator();
+                        } else {
                           return ListView.builder(
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
@@ -103,17 +116,17 @@ class _ItemDReportState extends State<ItemDReport> {
                                         child: Column(children: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 map['list'][index]
-                                                    ['patientname'],
+                                                ['patientname'],
                                                 //"Dr. Gaurav Bhardwaj M.D. (Dermatologist)",
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 18,
                                                     color: Colors.black,
                                                     fontWeight:
-                                                        FontWeight.w600),
+                                                    FontWeight.w600),
                                               ),
                                               InkWell(
                                                 onTap: () {},
@@ -127,9 +140,9 @@ class _ItemDReportState extends State<ItemDReport> {
                                           Divider(),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                             children: [
                                               CircleAvatar(
                                                 radius: 55,
@@ -142,7 +155,7 @@ class _ItemDReportState extends State<ItemDReport> {
                                               Flexible(
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       "Report Name :- ",
@@ -151,7 +164,7 @@ class _ItemDReportState extends State<ItemDReport> {
                                                           fontSize: 14,
                                                           color: Colors.black,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                     Text(
                                                       "${map['list'][index]['pdfname']}",
@@ -159,9 +172,9 @@ class _ItemDReportState extends State<ItemDReport> {
                                                       style: GoogleFonts.mulish(
                                                           fontSize: 14,
                                                           color:
-                                                              Colors.grey[500],
+                                                          Colors.grey[500],
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                     SizedBox(
                                                       height: 20,
@@ -173,11 +186,11 @@ class _ItemDReportState extends State<ItemDReport> {
                                                           MaterialPageRoute(
                                                               builder:
                                                                   (context) =>
-                                                                      PDFViewer(
-                                                                        pdf: snapshot.data['list'][index]
-                                                                            [
-                                                                            'url'],
-                                                                      )),
+                                                                  PDFViewer(
+                                                                    pdf: snapshot.data['list'][index]
+                                                                    [
+                                                                    'url'],
+                                                                  )),
                                                         );
                                                       },
                                                       child: Container(
@@ -186,21 +199,21 @@ class _ItemDReportState extends State<ItemDReport> {
                                                         decoration: BoxDecoration(
                                                             color: Colors.blue,
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8)),
+                                                            BorderRadius
+                                                                .circular(
+                                                                8)),
                                                         child: Center(
                                                           child: Text(
                                                             "Open Report",
                                                             style: GoogleFonts
                                                                 .mulish(
-                                                                    fontSize:
-                                                                        15,
-                                                                    color:
-                                                                        white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                fontSize:
+                                                                15,
+                                                                color:
+                                                                white,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600),
                                                           ),
                                                         ),
                                                       ),
@@ -217,10 +230,6 @@ class _ItemDReportState extends State<ItemDReport> {
                                       )),
                                 );
                               });
-                        } else if (snapshot.hasError) {
-                          return Text("unable");
-                        } else {
-                          return Center(child: CircularProgressIndicator());
                         }
                       }),
                 ],

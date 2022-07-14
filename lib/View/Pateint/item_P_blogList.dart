@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/Colors/Colors.dart';
 import '/Controller/BlogAPI.dart';
@@ -30,7 +31,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
   BlogApi blogApi = BlogApi();
   String desc =
       "f Minister Uddhav Thackeray is likely to take a final decision on reimposing lockdown after a cabinet meeting on April 14......";
-  String blogurl = "https://pdf-kylo.herokuapp.com/api/v1/views/blogs";
+  String blogurl = "https://pdf00.herokuapp.com/api/v1/views/blogs";
   List<Category> category = <Category>[
     Category('All Blogs', true),
   ];
@@ -42,7 +43,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -71,12 +72,28 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
-    return Expanded(
-      child: Container(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: SvgPicture.asset(
+                      "assets/logo.svg",
+                      height: 110,
+                      width: 160,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -112,11 +129,11 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                   .toString()
                                   .contains("All Blogs")) {
                                 blogurl =
-                                    "https://pdf-kylo.herokuapp.com/api/v1/views/blogs";
+                                "https://pdf00.herokuapp.com/api/v1/views/blogs";
                               } else {
                                 setState(() {
                                   blogurl =
-                                      "https://pdf-kylo.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
+                                  "https://pdf00.herokuapp.com/api/v1/views/blogs?category=${category[index].category}";
                                 });
                               }
                             });
@@ -125,7 +142,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                         child: Card(
                           elevation: 0,
                           color:
-                              category[index].ischecked! ? Colors.blue : white,
+                          category[index].ischecked! ? Colors.blue : white,
                           shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.blue, width: 1.5),
                             borderRadius: BorderRadius.circular(15.0),
@@ -168,16 +185,16 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                   margin: EdgeInsets.all(10),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Flexible(
                                             child: Text(
                                               snapshot.data['data'][index]
-                                                  ['title'],
+                                              ['title'],
                                               style: GoogleFonts.mulish(
                                                   fontSize: 16,
                                                   color: Colors.black,
@@ -189,7 +206,7 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                             children: <Widget>[
                                               Image.network(
                                                 snapshot.data['data'][index]
-                                                    ['img'],
+                                                ['img'],
                                                 height: _height * 10,
                                                 width: _width * 30,
                                                 fit: BoxFit.cover,
@@ -203,10 +220,10 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                       ),
                                       DescriptionTextWidget(
                                           text: snapshot.data['data'][index]
-                                              ['description']),
+                                          ['description']),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: [
                                           InkWell(
                                               onTap: () {
@@ -215,22 +232,22 @@ class Item_P_BlogListState extends State<Item_P_BlogList> {
                                                         builder: (context) =>
                                                             ReadBlogUser(
                                                               desc: snapshot.data[
-                                                                          'data']
-                                                                      [index][
-                                                                  'description'],
+                                                              'data']
+                                                              [index][
+                                                              'description'],
                                                               img: snapshot
-                                                                          .data[
-                                                                      'data'][
-                                                                  index]['img'],
+                                                                  .data[
+                                                              'data'][
+                                                              index]['img'],
                                                               readingTime: snapshot
-                                                                          .data[
-                                                                      'data'][index]
-                                                                  [
-                                                                  'description'],
+                                                                  .data[
+                                                              'data'][index]
+                                                              [
+                                                              'description'],
                                                               title: snapshot
-                                                                          .data[
-                                                                      'data'][
-                                                                  index]['title'],
+                                                                  .data[
+                                                              'data'][
+                                                              index]['title'],
                                                             )));
                                               },
                                               child: Text(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '/View/otp_screen.dart';
@@ -33,8 +34,8 @@ class _LogInState extends State<LogIn> {
                 SizedBox(
                   height: _height * 10,
                 ),
-                Image.asset(
-                  "assets/logo1.png",
+                SvgPicture.asset(
+                  "assets/logo.svg",
                   height: 110,
                   width: 160,
                 ),

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:simplyhealthy/View/Pateint/HomeScreenPatient.dart';
 import '/Colors/Colors.dart';
 import '/Controller/auth.dart';
 import '/Controller/sharedPreferance.dart';
@@ -62,7 +64,7 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
     // print(" isfirstUser ::  $isFirstUser");
     http.Response response = await http.get(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/patients?id=${widget.id}"),
+          "https://pdf00.herokuapp.com/api/v1/views/patients?id=${widget.id}"),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -95,7 +97,7 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/patient_create"),
+            "https://pdf00.herokuapp.com/api/v1/views/patient_create"),
         body: body,
         headers: headers);
 
@@ -133,11 +135,10 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                     children: [
                       InkWell(
                         onTap: () => getAllUser(),
-                        child: Image.asset(
-                          "assets/logo1.png",
-                          height: 80,
-                          fit: BoxFit.cover,
-                          width: 140,
+                        child: SvgPicture.asset(
+                          "assets/logo.svg",
+                          height: 110,
+                          width: 160,
                         ),
                       ),
                     ]),
@@ -163,46 +164,70 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                                   child: InkWell(
                                     onTap: () {
                                       print(
-                                          "!!@@ ${userList['data'][index]['name']}");
-                                      isFirstUser!
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Recommandation(
-                                                        role: "patient",
-                                                        id: userList['data']
-                                                            [index]['id'],
-                                                        avatar: index == 0
-                                                            ? picture[index]
-                                                            : userList['data']
-                                                                [index]['img'],
-                                                        name: userList['data']
-                                                            [index]['name'],
-                                                        email: userList['data']
-                                                            [index]['email'],
-                                                        mobile: userList['data']
-                                                            [index]['mobile'],
-                                                      )))
-                                          : Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BottomNavigationPatient(
-                                                        id: userList['data']
-                                                            [index]['id'],
-                                                        avatar: index == 0
-                                                            ? picture[index]
-                                                            : userList['data']
-                                                                [index]['img'],
-                                                        name: userList['data']
-                                                            [index]['name'],
-                                                        email: userList['data']
-                                                            [index]['email'],
-                                                        mobile: userList['data']
-                                                            [index]['mobile'],
-                                                      )),
-                                            );
+                                          "!!@@ ${userList['data']}");
+                                      print(isFirstUser);
+
+                                      Navigator
+                                          .of(context)
+                                          .push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  HomeScreen_Patient(
+                                                    id: userList['data']
+                                                    [index]['id'],
+                                                    avatar: index == 0
+                                                        ? picture[index]
+                                                        : userList['data']
+                                                    [index]['img'],
+                                                    name: userList['data']
+                                                    [index]['name'],
+                                                    email: userList['data']
+                                                    [index]['email'],
+                                                    mobile: userList['data']
+                                                    [index]['mobile'],
+                                                  )
+                                          )
+                                      );
+
+                                      // isFirstUser!
+                                      //     ? Navigator.push(
+                                      //         context,
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 Recommandation(
+                                      //                   role: "patient",
+                                      //                   id: userList['data']
+                                      //                       [index]['id'],
+                                      //                   avatar: index == 0
+                                      //                       ? picture[index]
+                                      //                       : userList['data']
+                                      //                           [index]['img'],
+                                      //                   name: userList['data']
+                                      //                       [index]['name'],
+                                      //                   email: userList['data']
+                                      //                       [index]['email'],
+                                      //                   mobile: userList['data']
+                                      //                       [index]['mobile'],
+                                      //                 )))
+                                      //     : Navigator.push(
+                                      //         context,
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 BottomNavigationPatient(
+                                      //                   id: userList['data']
+                                      //                       [index]['id'],
+                                      //                   avatar: index == 0
+                                      //                       ? picture[index]
+                                      //                       : userList['data']
+                                      //                           [index]['img'],
+                                      //                   name: userList['data']
+                                      //                       [index]['name'],
+                                      //                   email: userList['data']
+                                      //                       [index]['email'],
+                                      //                   mobile: userList['data']
+                                      //                       [index]['mobile'],
+                                      //                 )),
+                                      //       );
                                     },
                                     child: Card(
                                       elevation: 5,

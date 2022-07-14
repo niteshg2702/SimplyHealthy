@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Simply Healthy',
+      title: 'Medkalp',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: Colors.white,

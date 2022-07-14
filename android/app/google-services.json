@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "747769881536-q76f9nr1i7h2ekbt6p3cj9mhql8t0rs4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simplyhealthy",
+            "certificate_hash": "1c77724bbf91fa5045813500ff0c55f589c03291"
+          }
+        },
+        {
           "client_id": "747769881536-1a17kc3t2vqv2qhuhhenvqhvn92slbl0.apps.googleusercontent.com",
           "client_type": 3
         }

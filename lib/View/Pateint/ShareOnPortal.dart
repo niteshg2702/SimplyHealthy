@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/Colors/Colors.dart';
 import '/Controller/BlogAPI.dart';
@@ -35,7 +36,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
   BlogApi blogApi = BlogApi();
   String desc =
       "f Minister Uddhav Thackeray is likely to take a final decision on reimposing lockdown after a cabinet meeting on April 14......";
-  String blogurl = "https://pdf-extractor-new.herokuapp.com/api/v1/views/blogs";
+  String blogurl = "https://pdf00.herokuapp.com/api/v1/views/blogs";
   List<Category> category = <Category>[
     Category('All Doctors', true),
   ];
@@ -47,7 +48,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://pdf-extractor-new.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -65,7 +66,7 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
 
   Future getDoctorList() async {
     http.Response response = await http.get(
-        Uri.parse("https://pdf-extractor-new.herokuapp.com/api/v1/views/contact"));
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/contact"));
 
     if (response.statusCode == 200 || response.statusCode == 201) {
     } else {}
@@ -89,11 +90,10 @@ class _ShareOnPortalState extends State<ShareOnPortal> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/logo1.png",
-                      height: 80,
-                      fit: BoxFit.cover,
-                      width: 140,
+                    SvgPicture.asset(
+                      "assets/logo.svg",
+                      height: 110,
+                      width: 160,
                     ),
                   ]),
             ),

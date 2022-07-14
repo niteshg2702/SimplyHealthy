@@ -60,7 +60,7 @@ class _HomeScreenDoctorState extends State<HomeScreenDoctor> {
     print("${widget.id}");
     http.Response response = await http.get(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/users?id=${widget.id}"),
+          "https://pdf00.herokuapp.com/api/v1/views/users?id=${widget.id}"),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -84,7 +84,7 @@ class _HomeScreenDoctorState extends State<HomeScreenDoctor> {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/user_create"),
+            "https://pdf00.herokuapp.com/api/v1/views/user_create"),
         body: body,
         headers: headers);
 
@@ -119,11 +119,10 @@ class _HomeScreenDoctorState extends State<HomeScreenDoctor> {
                       ),
                       InkWell(
                         onTap: () => getAllUser(),
-                        child: Image.asset(
-                          "assets/logo1.png",
-                          height: 80,
-                          fit: BoxFit.cover,
-                          width: 140,
+                        child: SvgPicture.asset(
+                          "assets/logo.svg",
+                          height: 75,
+                          width: 165,
                         ),
                       ),
                     ]),
@@ -195,7 +194,7 @@ class _HomeScreenDoctorState extends State<HomeScreenDoctor> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Shared By:",
+                                                  "Shared To:",
                                                   style: GoogleFonts.montserrat(
                                                     color: Colors.white,
                                                     fontSize: 22,

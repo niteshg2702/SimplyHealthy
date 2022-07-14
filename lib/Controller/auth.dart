@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Auth {
-  final baseurl = "https://psdfextracter.herokuapp.com";
+  final baseurl = "https://pdf00.herokuapp.com";
 
   Future createUser(name, mobileNo, pwd, email, role, speciality) async {
     var body = role == "doctor"
@@ -16,7 +16,7 @@ class Auth {
             "email": email,
             "password": pwd,
             "role": role,
-            "specialty": speciality
+            "speciality": speciality
           })
         : jsonEncode({
             "username": name,
@@ -28,12 +28,14 @@ class Auth {
 
     var headers = {'content-Type': 'application/json'};
 
+
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/auth/register"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/auth/register"),
         body: body,
         headers: headers);
 
     print("craete user  $body");
+    print(response.body.toString());
     if (response.statusCode == 201 || response.statusCode == 200) {
       var a = jsonDecode(response.body);
       Fluttertoast.showToast(msg: "User Created ${a['user']['id']}");
@@ -58,25 +60,25 @@ class Auth {
 
     http.Response response1 = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection"),
         body: col1,
         headers: headers);
     print("coll 1 ${response1.statusCode}");
     http.Response response2 = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection"),
         body: col2,
         headers: headers);
     print("coll 2 ${response2.statusCode}");
     http.Response response3 = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection"),
         body: col3,
         headers: headers);
     print("coll 3 ${response3.statusCode}");
     http.Response response4 = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection"),
         body: col4,
         headers: headers);
     print("coll 4 ${response4.statusCode}");
@@ -89,7 +91,7 @@ class Auth {
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/auth/login"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/auth/login"),
         body: body,
         headers: headers);
     List list = [];
@@ -116,7 +118,7 @@ class Auth {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/auth/register_google"),
+            "https://pdf00.herokuapp.com/api/v1/auth/register_google"),
         body: body,
         headers: headers);
     List list = [];
@@ -145,7 +147,7 @@ class Auth {
 
     http.Response response = await http.put(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/update_patient?id=$id"),
+            "https://pdf00.herokuapp.com/api/v1/views/update_patient?id=$id"),
         body: body,
         headers: headers);
 
@@ -165,7 +167,7 @@ class Auth {
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/views/questions"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/questions"),
         body: body,
         headers: headers);
 

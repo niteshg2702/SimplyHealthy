@@ -66,7 +66,7 @@ class _EditBlogState extends State<EditBlog> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 

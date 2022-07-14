@@ -23,7 +23,7 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
     Category('All Doctors', true),
   ];
 
-  String drurl = "https://psdfextracter.herokuapp.com/api/v1/views/contact";
+  String drurl = "https://pdf00.herokuapp.com/api/v1/views/contact";
 
   void initState() {
     getAllCategory();
@@ -32,7 +32,7 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -61,11 +61,27 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
-    return Expanded(
-      child: Container(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SvgPicture.asset(
+                        "assets/logo.svg",
+                        height: 110,
+                        width: 160,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Align(
@@ -103,11 +119,11 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                     .toString()
                                     .contains("All Doctors")) {
                                   drurl =
-                                      "https://psdfextracter.herokuapp.com/api/v1/views/contact";
+                                  "https://pdf00.herokuapp.com/api/v1/views/contact";
                                 } else {
                                   setState(() {
                                     drurl =
-                                        "https://psdfextracter.herokuapp.com/api/v1/views/contact?category=${category[index].category}";
+                                    "https://pdf00.herokuapp.com/api/v1/views/contact?category=${category[index].category}";
                                   });
                                 }
                               });
@@ -167,7 +183,7 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                       child: Column(children: [
                                         Text(
                                           snapshot.data['contacts'][index]
-                                              ['name'],
+                                          ['name'],
                                           //"Dr. Gaurav Bhardwaj M.D (Dermatologist)",
                                           style: GoogleFonts.mulish(
                                               fontSize: 15,
@@ -177,18 +193,18 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                         SizedBox(height: 10),
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                           children: [
                                             CircleAvatar(
                                               radius: 55,
                                               child:
-                                                  Image.asset("assets/dr.png"),
+                                              Image.asset("assets/dr.png"),
                                             ),
                                             Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "contact no: ${snapshot.data['contacts'][index]['mobile']}",
@@ -197,7 +213,7 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                                       fontSize: 14,
                                                       color: Colors.grey[500],
                                                       fontWeight:
-                                                          FontWeight.w600),
+                                                      FontWeight.w600),
                                                 ),
                                                 Text(
                                                   "${snapshot.data['contacts'][index]['email']}",
@@ -206,7 +222,7 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                                       fontSize: 14,
                                                       color: Colors.grey[500],
                                                       fontWeight:
-                                                          FontWeight.w600),
+                                                      FontWeight.w600),
                                                 ),
                                                 SizedBox(
                                                   height: 10,
@@ -226,18 +242,18 @@ class _item_P_doctorListState extends State<item_P_doctorList> {
                                                     decoration: BoxDecoration(
                                                         color: Colors.blue,
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8)),
+                                                        BorderRadius
+                                                            .circular(8)),
                                                     child: Center(
                                                       child: Text(
                                                         "Recommnadtion",
                                                         style:
-                                                            GoogleFonts.mulish(
-                                                                fontSize: 15,
-                                                                color: white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                        GoogleFonts.mulish(
+                                                            fontSize: 15,
+                                                            color: white,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w600),
                                                       ),
                                                     ),
                                                   ),

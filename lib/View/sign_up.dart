@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Colors/Colors.dart';
@@ -42,7 +43,7 @@ class _Sign_UpState extends State<Sign_Up> {
 
   Future getAllCategory() async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/user_blog_create"));
+        "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -78,8 +79,8 @@ class _Sign_UpState extends State<Sign_Up> {
             SizedBox(
               height: _height * 5,
             ),
-            Image.asset(
-              "assets/logo1.png",
+            SvgPicture.asset(
+              "assets/logo.svg",
               height: 110,
               width: 160,
             ),

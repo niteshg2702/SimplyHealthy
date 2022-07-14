@@ -92,7 +92,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     print("hi");
     http.Response response = await http.get(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/coll?id=${widget.collectionid}&userid=${widget.userid}"),
+          "https://pdf00.herokuapp.com/api/v1/views/coll?id=${widget.collectionid}&userid=${widget.userid}"),
     );
     // print(" hello ${response.statusCode} ${response.body}");
     // if (mounted) {
@@ -818,7 +818,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     print("what we are sending 1 $values");
 
     http.Response response = await http.post(
-      Uri.parse("https://pdf-kylo.herokuapp.com/api/v1/views/report"),
+      Uri.parse("https://pdf00.herokuapp.com/api/v1/views/report"),
       headers: h1,
       body: jsonEncode(b1),
     );

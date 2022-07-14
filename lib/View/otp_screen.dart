@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '/Controller/auth.dart';
 import '/View/Doctor/Home_Screen_doctor.dart';
@@ -79,10 +80,10 @@ class _otp_screenState extends State<otp_screen> {
                 SizedBox(
                   height: _height * 10,
                 ),
-                Image.asset(
-                  "assets/logo1.png",
-                  height: 110,
-                  width: 160,
+                SvgPicture.asset(
+                  "assets/logo.svg",
+                  height: 75,
+                  width: 165,
                 ),
                 Flexible(
                   child: SizedBox(),

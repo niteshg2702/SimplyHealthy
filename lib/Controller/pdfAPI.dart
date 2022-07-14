@@ -15,7 +15,7 @@ class PDFApi {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection"),
         body: body,
         headers: headers);
 
@@ -30,7 +30,7 @@ class PDFApi {
   Future getCollections(id) async {
     http.Response response = await http.get(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id"),
+          "https://pdf00.herokuapp.com/api/v1/views/collection?id=$id"),
     );
     // print(
     //     "get collection list stscde and response https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id ${response.statusCode} ${response.body}");
@@ -50,7 +50,7 @@ class PDFApi {
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/views/pdf"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/pdf"),
         body: body1,
         headers: headers);
     print(
@@ -60,7 +60,7 @@ class PDFApi {
 
   Future getSinglePDF(id) async {
     http.Response response = await http.get(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/pdf?id=${id}"));
+        "https://pdf00.herokuapp.com/api/v1/views/pdf?id=${id}"));
 
     // print("get single pdf ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
@@ -69,7 +69,7 @@ class PDFApi {
   Future DeleteCollection(id) async {
     http.Response response = await http.delete(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id"),
+          "https://pdf00.herokuapp.com/api/v1/views/collection?id=$id"),
     );
 
     print("delete collection ${response.body}");
@@ -85,7 +85,7 @@ class PDFApi {
 
     http.Response response = await http.put(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id"),
+          "https://pdf00.herokuapp.com/api/v1/views/collection?id=$id"),
       body: body,
       headers: headers,
     );
@@ -105,7 +105,7 @@ class PDFApi {
 
     http.Response response = await http.put(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/pdf?id=$id"),
+            "https://pdf00.herokuapp.com/api/v1/views/pdf?id=$id"),
         body: body1,
         headers: headers);
     print("renamed single pdf ${response.statusCode} ${response.body}");
@@ -116,7 +116,7 @@ class PDFApi {
 
   Future DeleteSignlePdf(id) async {
     http.Response response = await http.delete(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/pdf?id=$id"));
+        "https://pdf00.herokuapp.com/api/v1/views/pdf?id=$id"));
 
     print(" deleted pdf ${response.statusCode} ${response.body}");
     if (response.statusCode == 201 || response.statusCode == 200) {
@@ -126,7 +126,7 @@ class PDFApi {
 
   Future DeleteSignlePdfFromCollection(id) async {
     http.Response response = await http.delete(Uri.parse(
-        "https://psdfextracter.herokuapp.com/api/v1/views/pdf?id=$id"));
+        "https://pdf00.herokuapp.com/api/v1/views/pdf?id=$id"));
 
     print(
         "$id deleted pdf from Collection ${response.statusCode} ${response.body}");
@@ -144,7 +144,7 @@ class PDFApi {
 
     http.Response response = await http.put(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/pdf?id=$id"),
+            "https://pdf00.herokuapp.com/api/v1/views/pdf?id=$id"),
         body: body1,
         headers: headers);
     print(
@@ -167,7 +167,7 @@ class PDFApi {
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/views/pdf"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/pdf"),
         body: body1,
         headers: headers);
     print(
@@ -186,7 +186,7 @@ class PDFApi {
     var headers = {'content-Type': 'application/json'};
 
     http.Response response = await http.post(
-        Uri.parse("https://psdfextracter.herokuapp.com/api/v1/views/portal"),
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/portal"),
         body: body1,
         headers: headers);
     print("share on portal  ${response.statusCode} ${response.body}");

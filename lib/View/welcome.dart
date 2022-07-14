@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
@@ -40,13 +41,16 @@ class _welcomeState extends State<welcome> {
                 SizedBox(
                   height: _height * 10,
                 ),
-                Image.asset(
-                  "assets/logo1.png",
-                  height: 110,
-                  width: 160,
+                SvgPicture.asset(
+                  "assets/logo.svg",
+                  height: 75,
+                  width: 165,
+                ),
+                SizedBox(
+                  height: 35,
                 ),
                 Text(
-                  "Welcome to Simpli Healthy",
+                  "Welcome to Medkalp",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                     color: Colors.white,

@@ -5,6 +5,7 @@ import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ import 'package:external_path/external_path.dart';
 class Item_Report extends StatefulWidget {
   const Item_Report({Key? key, required this.id}) : super(key: key);
 
-  final int id;
+  final String id;
   @override
   State<Item_Report> createState() => _Item_ReportState();
 }
@@ -37,7 +38,7 @@ class _Item_ReportState extends State<Item_Report> {
   Future getAnalyzedImage() async {
     http.Response response = await http.get(
       Uri.parse(
-          "https://psdfextracter.herokuapp.com/api/v1/views/analysisImg?id=${widget.id}"),
+          "https://pdf00.herokuapp.com/api/v1/views/analysisImg?id=${widget.id}"),
     );
     print("get analyzed report link  ${response.statusCode} ${response.body}");
 
@@ -51,7 +52,7 @@ class _Item_ReportState extends State<Item_Report> {
   TableAPI() async {
     http.Response response = await http.get(
       Uri.parse(
-          "https://pdf-kylo.herokuapp.com/api/v1/views/report?id=${widget.id}"),
+          "https://pdf00.herokuapp.com/api/v1/views/report?id=${widget.id}"),
     );
 
     print("${response.body}");
@@ -104,7 +105,7 @@ class _Item_ReportState extends State<Item_Report> {
 
     var snapshot = await _firebaseStorage
         .ref()
-        .child('CSV/${widget.id}/filename${widget.id}')
+        .child('CSV/${widget.id}/${DateTime.now()}.csv')
         .putFile(f);
     Fluttertoast.showToast(msg: "Reports confirmed by user");
   }
@@ -113,173 +114,187 @@ class _Item_ReportState extends State<Item_Report> {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  height: _height * 6,
-                  child: ElevatedButton.icon(
-                      icon: Icon(Icons.thumb_up_alt),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: SvgPicture.asset(
+                      "assets/logo.svg",
+                      height: 110,
+                      width: 160,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                height: _height * 6,
+                child: ElevatedButton.icon(
+                    icon: Icon(Icons.thumb_up_alt),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    label: const Text(
+                      "Confirm Report",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () async {
+                      CreateCSV();
+                    }),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FutureBuilder(
+                future: TableAPI(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: [
+                        Table(
+                          defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                          columnWidths: const {
+                            0: FlexColumnWidth(1),
+                            1: FlexColumnWidth(3),
+                            2: FlexColumnWidth(5),
+                          },
+                          defaultColumnWidth: const FlexColumnWidth(),
+                          border: TableBorder.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10),
+                              ),
+                              width: 2),
+                          children: _drawTable(snapshot.data['list']),
                         ),
-                      ),
-                      label: const Text(
-                        "Confirm Report",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      onPressed: () async {
-                        CreateCSV();
-                      }),
-                ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("unable to fetch detail");
+                  } else {
+                    return Text("");
+                  }
+                }),
+            // FutureBuilder(
+            //     future: plotAnalysisGraph(),
+            //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //       if (snapshot.hasData) {
+            //         return ListView.builder(
+            //             shrinkWrap: true,
+            //             physics: NeverScrollableScrollPhysics(),
+            //             itemCount: snapshot.data['list'].length,
+            //             itemBuilder: (BuildContext context, int index) {
+            //               List<_SalesData> l = [];
+            //               for (int i = 0;
+            //                   i < snapshot.data['list'][index]['values'].length;
+            //                   i++) {
+            //                 print("i |:| $i");
+            //                 double d = double.parse(snapshot.data['list'][index]
+            //                         ['values'][i]
+            //                     .toString());
+            //                 assert(d is double);
+            //                 l.add(_SalesData(
+            //                     snapshot.data['list'][index]['month'][i]
+            //                         .toString(),
+            //                     d));
+            //               }
+            //               return Column(
+            //                 children: [
+            //                   SfCartesianChart(
+            //                       primaryXAxis: CategoryAxis(),
+            //                       // Chart title
+            //                       title: ChartTitle(
+            //                         text: snapshot.data['list'][index]['title'],
+            //                       ),
+            //                       // Enable legend
+            //                       legend: Legend(isVisible: false),
+            //                       // Enable tooltip
+            //                       tooltipBehavior:
+            //                           TooltipBehavior(enable: true),
+            //                       series: <ChartSeries<_SalesData, String>>[
+            //                         LineSeries(
+            //                             dataSource: l,
+            //                             xValueMapper: (_SalesData sales, _) =>
+            //                                 sales.year,
+            //                             yValueMapper: (_SalesData sales, _) =>
+            //                                 sales.sales,
+            //                             name: 'Sales',
+            //                             // Enable data label
+            //                             dataLabelSettings:
+            //                                 DataLabelSettings(isVisible: true))
+            //                       ]),
+            //                   Text(
+            //                     snapshot.data['list'][index]['reportName'],
+            // style: GoogleFonts.mulish(
+            //     fontSize: 18, fontWeight: FontWeight.bold),
+            //                   ),
+            //                   Divider(
+            //                     thickness: 2,
+            //                   )
+            //                 ],
+            //               );
+            //             });
+            //       } else if (snapshot.hasError) {
+            //         return Center(child: Text("No Data"));
+            //       } else {
+            //         return Text("");
+            //       }
+            //     }),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: FutureBuilder(
+                future: getAnalyzedImage(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data['list'].length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data['list'].length != 0) {
+                            return Container(
+                              margin: EdgeInsets.all(10),
+                              height: _height * 30,
+                              width: _width * 80,
+                              child: Image.network(
+                                snapshot.data['list'][index]['img'],
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          } else {
+                            return Center(child: Text("No Reorts"));
+                          }
+                        });
+                  } else if (snapshot.hasError) {
+                    return const Center(child: Text("No Internet"));
+                  } else {
+                    return Center(
+                      child: Container(
+                          height: 200,
+                          width: 200,
+                          child: Lottie.asset("assets/loader.json")),
+                    );
+                  }
+                },
               ),
-              SizedBox(
-                height: 10,
-              ),
-              FutureBuilder(
-                  future: TableAPI(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        children: [
-                          Table(
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            columnWidths: const {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(3),
-                              2: FlexColumnWidth(5),
-                            },
-                            defaultColumnWidth: const FlexColumnWidth(),
-                            border: TableBorder.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(10),
-                                ),
-                                width: 2),
-                            children: _drawTable(snapshot.data['list']),
-                          ),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("unable to fetch detail");
-                    } else {
-                      return Text("");
-                    }
-                  }),
-              // FutureBuilder(
-              //     future: plotAnalysisGraph(),
-              //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-              //       if (snapshot.hasData) {
-              //         return ListView.builder(
-              //             shrinkWrap: true,
-              //             physics: NeverScrollableScrollPhysics(),
-              //             itemCount: snapshot.data['list'].length,
-              //             itemBuilder: (BuildContext context, int index) {
-              //               List<_SalesData> l = [];
-              //               for (int i = 0;
-              //                   i < snapshot.data['list'][index]['values'].length;
-              //                   i++) {
-              //                 print("i |:| $i");
-              //                 double d = double.parse(snapshot.data['list'][index]
-              //                         ['values'][i]
-              //                     .toString());
-              //                 assert(d is double);
-              //                 l.add(_SalesData(
-              //                     snapshot.data['list'][index]['month'][i]
-              //                         .toString(),
-              //                     d));
-              //               }
-              //               return Column(
-              //                 children: [
-              //                   SfCartesianChart(
-              //                       primaryXAxis: CategoryAxis(),
-              //                       // Chart title
-              //                       title: ChartTitle(
-              //                         text: snapshot.data['list'][index]['title'],
-              //                       ),
-              //                       // Enable legend
-              //                       legend: Legend(isVisible: false),
-              //                       // Enable tooltip
-              //                       tooltipBehavior:
-              //                           TooltipBehavior(enable: true),
-              //                       series: <ChartSeries<_SalesData, String>>[
-              //                         LineSeries(
-              //                             dataSource: l,
-              //                             xValueMapper: (_SalesData sales, _) =>
-              //                                 sales.year,
-              //                             yValueMapper: (_SalesData sales, _) =>
-              //                                 sales.sales,
-              //                             name: 'Sales',
-              //                             // Enable data label
-              //                             dataLabelSettings:
-              //                                 DataLabelSettings(isVisible: true))
-              //                       ]),
-              //                   Text(
-              //                     snapshot.data['list'][index]['reportName'],
-              // style: GoogleFonts.mulish(
-              //     fontSize: 18, fontWeight: FontWeight.bold),
-              //                   ),
-              //                   Divider(
-              //                     thickness: 2,
-              //                   )
-              //                 ],
-              //               );
-              //             });
-              //       } else if (snapshot.hasError) {
-              //         return Center(child: Text("No Data"));
-              //       } else {
-              //         return Text("");
-              //       }
-              //     }),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: FutureBuilder(
-                  future: getAnalyzedImage(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data['list'].length,
-                          itemBuilder: (context, index) {
-                            if (snapshot.data['list'].length != 0) {
-                              return Container(
-                                margin: EdgeInsets.all(10),
-                                height: _height * 30,
-                                width: _width * 80,
-                                child: Image.network(
-                                  snapshot.data['list'][index]['img'],
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            } else {
-                              return Center(child: Text("No Reorts"));
-                            }
-                          });
-                    } else if (snapshot.hasError) {
-                      return const Center(child: Text("No Internet"));
-                    } else {
-                      return Center(
-                        child: Container(
-                            height: 200,
-                            width: 200,
-                            child: Lottie.asset("assets/loader.json")),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

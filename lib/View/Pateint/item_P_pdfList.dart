@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,7 +49,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
     Future getCollections(id) async {
       http.Response response = await http.get(
         Uri.parse(
-            "https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id"),
+            "https://pdf00.herokuapp.com/api/v1/views/collection?id=$id"),
       );
       // print(
       //     "get collection list stscde and response https://psdfextracter.herokuapp.com/api/v1/views/collection?id=$id ${response.statusCode} ${response.body}");
@@ -59,14 +60,28 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
 
       return jsonDecode(response.body);
     }
-
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SvgPicture.asset(
+                        "assets/logo.svg",
+                        height: 110,
+                        width: 160,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               InkWell(
                 onTap: () {
                   addCollection();
@@ -115,9 +130,9 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                           itemCount: snapshot.data['list'].length,
                           itemBuilder: (BuildContext context, int index) {
                             bool? isCurrentIndexSelected =
-                                itemsSelectedValue[index] == null
-                                    ? false
-                                    : itemsSelectedValue[index];
+                            itemsSelectedValue[index] == null
+                                ? false
+                                : itemsSelectedValue[index];
 
                             //Card card;
                             // if (isCurrentIndexSelected! == false) {
@@ -125,18 +140,18 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                               onTap: () {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(
-                                        builder: (context) => ViewPdfCollection(
-                                              patientname: widget.name,
-                                              collectionName:
-                                                  snapshot.data['list'][index]
-                                                      ['collection'],
-                                              collectionid: snapshot
-                                                  .data['list'][index]['id'],
-                                              collectionPdflist: snapshot
-                                                  .data['list'][index]['list'],
-                                              userid: widget.id,
-                                              mode: "old",
-                                            )))
+                                    builder: (context) => ViewPdfCollection(
+                                      patientname: widget.name,
+                                      collectionName:
+                                      snapshot.data['list'][index]
+                                      ['collection'],
+                                      collectionid: snapshot
+                                          .data['list'][index]['id'],
+                                      collectionPdflist: snapshot
+                                          .data['list'][index]['list'],
+                                      userid: widget.id,
+                                      mode: "old",
+                                    )))
                                     .then((value) {
                                   setState(() {});
                                 });
@@ -147,9 +162,9 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                   margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         height: 160,
@@ -165,7 +180,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                         ),
                                         decoration: BoxDecoration(
                                             color:
-                                                Colors.black87.withOpacity(0.8),
+                                            Colors.black87.withOpacity(0.8),
                                             image: DecorationImage(
                                                 colorFilter: ColorFilter.mode(
                                                     Colors.black54
@@ -174,7 +189,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                                 image: const AssetImage(
                                                     "assets/pdf.png")),
                                             borderRadius:
-                                                const BorderRadius.only(
+                                            const BorderRadius.only(
                                               topLeft: Radius.circular(12),
                                               topRight: Radius.circular(12),
                                             )),
@@ -186,20 +201,20 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                         fit: FlexFit.loose,
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               snapshot.data['list'][index]
-                                                  ['collection'],
+                                              ['collection'],
                                               style: GoogleFonts.poppins(
                                                   fontSize: 16,
                                                   color: Colors.grey[800],
                                                   fontWeight:
-                                                      FontWeight.normal),
+                                                  FontWeight.normal),
                                             ),
                                             Text(
                                               snapshot.data['list'][index]
-                                                      ['created']
+                                              ['created']
                                                   .toString()
                                                   .split(",")[1]
                                                   .substring(0, 8),
@@ -207,7 +222,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                                   fontSize: 12,
                                                   color: Colors.grey[500],
                                                   fontWeight:
-                                                      FontWeight.normal),
+                                                  FontWeight.normal),
                                             ),
                                             SizedBox(height: _height * 8),
                                             Center(
@@ -216,14 +231,14 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                                       fontSize: _width * 4,
                                                       color: Colors.grey[500],
                                                       fontWeight:
-                                                          FontWeight.normal)),
+                                                      FontWeight.normal)),
                                             ),
                                           ],
                                         ),
                                       ),
                                       PopupMenuButton<String>(
                                         padding:
-                                            EdgeInsets.fromLTRB(20, 0, 5, 50),
+                                        EdgeInsets.fromLTRB(20, 0, 5, 50),
                                         onSelected: (value) {
                                           switch (value) {
                                             case 'Delete':
@@ -449,9 +464,9 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                       // ),
                                       decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(25),
-                                        topRight: Radius.circular(25),
-                                      )),
+                                            topLeft: Radius.circular(25),
+                                            topRight: Radius.circular(25),
+                                          )),
                                     ),
                                     const SizedBox(
                                       width: 10,
@@ -461,11 +476,11 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                       fit: FlexFit.tight,
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             snapshot.data['list'][index]
-                                                ['pdfname'],
+                                            ['pdfname'],
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 color: Colors.grey[800],
@@ -488,12 +503,12 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                                       MaterialPageRoute(
                                                           builder:
                                                               (context) =>
-                                                                  PDFViewer(
-                                                                    pdf: snapshot.data['list']
-                                                                            [
-                                                                            index]
-                                                                        ['url'],
-                                                                  )));
+                                                              PDFViewer(
+                                                                pdf: snapshot.data['list']
+                                                                [
+                                                                index]
+                                                                ['url'],
+                                                              )));
                                                   //sendEmail();
                                                 },
                                                 child: Icon(
@@ -522,18 +537,18 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                               InkWell(
                                                 onTap: () {
                                                   downloadPDF(
-                                                          snapshot.data['list']
-                                                              [index]['url'],
-                                                          snapshot.data['list']
-                                                                  [index]
-                                                              ['pdfname'])
+                                                      snapshot.data['list']
+                                                      [index]['url'],
+                                                      snapshot.data['list']
+                                                      [index]
+                                                      ['pdfname'])
                                                       .then((value) {
                                                     ShareDialog(
                                                         value,
                                                         snapshot.data['list']
-                                                            [index]['url'],
+                                                        [index]['url'],
                                                         snapshot.data['list']
-                                                            [index]['pdfname']);
+                                                        [index]['pdfname']);
                                                   });
                                                 },
                                                 child: Icon(
@@ -565,7 +580,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                                     // ),
                                     PopupMenuButton<String>(
                                       padding:
-                                          EdgeInsets.fromLTRB(30, 0, 5, 50),
+                                      EdgeInsets.fromLTRB(30, 0, 5, 50),
                                       onSelected: (value) {
                                         switch (value) {
                                           case 'Delete':
@@ -604,12 +619,6 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
             ],
           ),
         ),
-        decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ShareSucessScreen extends StatelessWidget {
@@ -18,11 +19,10 @@ class ShareSucessScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "assets/logo1.png",
-                    height: 80,
-                    fit: BoxFit.cover,
-                    width: 140,
+                  SvgPicture.asset(
+                    "assets/logo.svg",
+                    height: 75,
+                    width: 165,
                   ),
                 ]),
           ),

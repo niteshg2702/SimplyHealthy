@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/Controller/auth.dart';
@@ -55,8 +56,8 @@ class _SignUpTwoState extends State<SignUpTwo> {
             SizedBox(
               height: _height * 5,
             ),
-            Image.asset(
-              "assets/logo1.png",
+            SvgPicture.asset(
+              "assets/logo.svg",
               height: 110,
               width: 160,
             ),

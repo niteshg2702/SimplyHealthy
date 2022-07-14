@@ -4,6 +4,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -86,58 +87,59 @@ class _BottomNavigationPatientState extends State<BottomNavigationPatient> {
               //crossAxisAlignment: CrossAxisAlignment.center,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: _height * 7,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          EditUserProfile(username, useremail, usermobile,
-                              selectedAvtar, widget.id);
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.zero),
-                          child: Image.asset(
-                            selectedAvtar!,
-                            scale: 15,
+                  SizedBox(
+                    height: _height * 7,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            EditUserProfile(username, useremail, usermobile,
+                                selectedAvtar, widget.id);
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.zero),
+                            child: Image.asset(
+                              selectedAvtar!,
+                              scale: 15,
+                            ),
                           ),
                         ),
-                      ),
-                      // SizedBox(
-                      //   width: _width * 10,
-                      // ),
-                      Image.asset(
-                        "assets/logo1.png",
-                        scale: 3.5,
-                      ),
-                      // SizedBox(
-                      //   width: _width * 10,
-                      // ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Recommandation(
-                                        role: "patient",
-                                        id: widget.id,
-                                        avatar: widget.avatar,
-                                        name: widget.name,
-                                        email: widget.email,
-                                        mobile: widget.mobile,
-                                      )));
-                        },
-                        child: Image.asset("assets/question.png",
-                            scale: 3, fit: BoxFit.cover),
-                      )
-                    ],
+                        // SizedBox(
+                        //   width: _width * 10,
+                        // ),
+                        SvgPicture.asset(
+                          "assets/logo.svg",
+                          height: 110,
+                          width: 160,
+                        ),
+                        // SizedBox(
+                        //   width: _width * 10,
+                        // ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Recommandation(
+                                          role: "patient",
+                                          id: widget.id,
+                                          avatar: widget.avatar,
+                                          name: widget.name,
+                                          email: widget.email,
+                                          mobile: widget.mobile,
+                                        )));
+                          },
+                          child: Image.asset("assets/question.png",
+                              scale: 3, fit: BoxFit.cover),
+                        )
+                      ],
+                    ),
                   ),
-                ),
                 _pageOptions[_currentIndex],
               ],
             ),

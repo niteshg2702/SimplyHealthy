@@ -24,7 +24,7 @@ class BlogApi {
 
     http.Response response = await http.post(
         Uri.parse(
-            "https://pdf-kylo.herokuapp.com/api/v1/views/user_blog_create"),
+            "https://pdf00.herokuapp.com/api/v1/views/user_blog_create"),
         body: body,
         headers: headers);
 
@@ -40,7 +40,7 @@ class BlogApi {
 
   Future getAllBlog(id) async {
     http.Response response = await http.get(Uri.parse(
-        "https://pdf-kylo.herokuapp.com/api/v1/views/all_posts?id=$id"));
+        "https://pdf00.herokuapp.com/api/v1/views/all_posts?id=$id"));
 
     print("${response.statusCode} ${response.body}");
 
@@ -63,7 +63,7 @@ class BlogApi {
 
     http.Response response = await http.put(
         Uri.parse(
-            "https://pdf-kylo.herokuapp.com/api/v1/views/user_blog_create?id=$id"),
+            "https://pdf00.herokuapp.com/api/v1/views/user_blog_create?id=$id"),
         body: body,
         headers: headers);
 

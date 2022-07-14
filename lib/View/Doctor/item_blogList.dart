@@ -29,7 +29,7 @@ class _BlogState extends State<Blog> {
   Future getAllBlog(id) async {
     // print("111 222 ${widget.id}}");
     http.Response response = await http.get(Uri.parse(
-        "https://pdf-kylo.herokuapp.com/api/v1/views/all_posts?id=${widget.id}"));
+        "https://pdf00.herokuapp.com/api/v1/views/all_posts?id=${widget.id}"));
 
     //print("get blog particular doctor ${response.statusCode} ${response.body}");
     setState(() {
@@ -43,7 +43,7 @@ class _BlogState extends State<Blog> {
   Future getDraftBlog(id) async {
     // print("111 222 ${widget.id}}");
     http.Response response = await http.get(Uri.parse(
-        "https://pdf-kylo.herokuapp.com/api/v1/views/drafts?id=${widget.id}"));
+        "https://pdf00.herokuapp.com/api/v1/views/drafts?id=${widget.id}"));
 
     // print(
     //     "draft blog particular doctor ${response.statusCode} ${response.body}");

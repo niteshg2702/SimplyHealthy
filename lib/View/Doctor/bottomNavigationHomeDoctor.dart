@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:simplyhealthy/View/Doctor/item_d_Report.dart';
@@ -52,9 +53,10 @@ class _BottomNavigationHomePageState extends State<BottomNavigationHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "assets/logo1.png",
-                    scale: 3.5,
+                  SvgPicture.asset(
+                    "assets/logo.svg",
+                    height: 75,
+                    width: 165,
                   ),
                 ],
               ),
