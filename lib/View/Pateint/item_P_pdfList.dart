@@ -701,6 +701,7 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                   alignment: Alignment.center,
                   child: ElevatedButton(
                       onPressed: () async {
+                        print("clicked");
                         final isValid = formGlobalKey.currentState!.validate();
                         if (!isValid) {
                           return;
@@ -712,17 +713,21 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                             "title": _name.text,
                             "l_list": []
                           };
+                          print("calling collection");
 
                           pdfApi.createCollection(collection).then((value) {
+                            print("hello");
+                            print(collection);
                             if (value[0] == 200 || value[0] == 201) {
+                              print("Collection created");
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => ViewPdfCollection(
                                       patientname: widget.name,
-                                      collectionName: value[1]['collection'],
+                                      collectionName: value[0]['collection'],
                                       userid: widget.id,
                                       mode: "new",
-                                      collectionid: value[1]['id'],
-                                      collectionPdflist: value[1]['list'])));
+                                      collectionid: value[0]['id'],
+                                      collectionPdflist: value[0]['list'])));
                             } else {
                               Fluttertoast.showToast(
                                   msg: "Something went wrong");

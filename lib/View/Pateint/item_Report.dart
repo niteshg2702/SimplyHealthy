@@ -11,9 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 import 'package:simplyhealthy/View/Doctor/createBlog.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:external_path/external_path.dart';
+import 'package:whatsapp_share2/whatsapp_share2.dart';
 
 class Item_Report extends StatefulWidget {
   const Item_Report({Key? key, required this.id}) : super(key: key);
@@ -148,11 +150,17 @@ class _Item_ReportState extends State<Item_Report> {
                       ),
                     ),
                     label: const Text(
-                      "Confirm Report",
+                      "Share Report",
                       style: TextStyle(fontSize: 15),
                     ),
                     onPressed: () async {
                       CreateCSV();
+                      Directory? d = await getExternalStorageDirectory();
+                      String Pathway = '${d!.path}/filename${widget.id}.csv';
+                      print("Path ---> $Pathway");
+                      //File(Pathway).writeAsBytesSync(bytes);
+                      await Share.shareFiles([Pathway!]);
+
                     }),
               ),
             ),
@@ -163,27 +171,31 @@ class _Item_ReportState extends State<Item_Report> {
                 future: TableAPI(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        Table(
-                          defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                          columnWidths: const {
-                            0: FlexColumnWidth(1),
-                            1: FlexColumnWidth(3),
-                            2: FlexColumnWidth(5),
-                          },
-                          defaultColumnWidth: const FlexColumnWidth(),
-                          border: TableBorder.all(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10),
-                              ),
-                              width: 2),
-                          children: _drawTable(snapshot.data['list']),
-                        ),
-                      ],
+                    return SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+                          Table(
+                            defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                            columnWidths: const {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(3),
+                              2: FlexColumnWidth(5),
+                            },
+                            defaultColumnWidth: const FlexColumnWidth(),
+                            border: TableBorder.all(
+                                color: Colors.black,
+                                style: BorderStyle.solid,
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
+                                ),
+                                width: 2),
+                            children: _drawTable(snapshot.data['list']),
+                          ),
+                        ],
+                      ),
                     );
                   } else if (snapshot.hasError) {
                     return Text("unable to fetch detail");

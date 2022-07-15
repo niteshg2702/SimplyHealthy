@@ -12,7 +12,7 @@ class Auth {
     var body = role == "doctor"
         ? jsonEncode({
             "username": name,
-            "mobile": mobileNo,
+            "mobile": mobileNo.toString(),
             "email": email,
             "password": pwd,
             "role": role,

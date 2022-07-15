@@ -20,7 +20,7 @@ class HomeScreen_Patient extends StatefulWidget {
 class _HomeScreen_PatientState extends State<HomeScreen_Patient> {
 
   List avtar = ["assets/f1.png", "assets/f2.png", "assets/f3.png"];
-  List card = ["assets/Reports.svg", "assets/Medfora.svg", "assets/blog.svg", "assets/services.svg"];
+  List card = ["assets/reportImage.png", "assets/MedforaImage.png", "assets/blogImage.png", "assets/doc.png"];
   String? selectedAvtar;
 
   @override
@@ -108,7 +108,7 @@ class _HomeScreen_PatientState extends State<HomeScreen_Patient> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => Reports_Dashboard(id: widget.id, name: widget.name, avatar: widget.avatar, email: widget.email, mobile: widget.mobile)));
                   }),
                   //Medfora
-                  container(_height, _width, card[3], "Medfora", () {
+                  container(_height, _width, card[1], "Medfora", () {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
@@ -128,7 +128,7 @@ class _HomeScreen_PatientState extends State<HomeScreen_Patient> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => Item_P_BlogList(id: widget.id)));
                   }),
                   //Services
-                  container(_height, _width, card[1], "Services", () {
+                  container(_height, _width, card[3], "Services", () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => item_P_doctorList()));
                   })
                 ],
@@ -162,7 +162,7 @@ class _HomeScreen_PatientState extends State<HomeScreen_Patient> {
                 width: 120 * h,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(120 * h),
-                    child: SvgPicture.asset(image)
+                    child: Image.asset(image)
                 ),
               ),
               SizedBox(
