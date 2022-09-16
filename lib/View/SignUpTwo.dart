@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import '/Controller/auth.dart';
 import '/Controller/sharedPreferance.dart';
 import '/View/otpScreenforSignUp.dart';
@@ -84,25 +86,10 @@ class _SignUpTwoState extends State<SignUpTwo> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      //initialValue: name,
-                      keyboardType: TextInputType.phone,
-                      textAlign: TextAlign.start,
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18, color: Colors.black),
-                      validator: (value) {
-                        if (value!.length != 10) {
-                          return "Please Enter Valid Phone No";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) => setState(() {
-                        this.mobileno = value;
-                      }),
+                    IntlPhoneField(
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -123,6 +110,22 @@ class _SignUpTwoState extends State<SignUpTwo> {
                           borderRadius: BorderRadius.circular(6),
                         ),
                       ),
+                      initialCountryCode: 'IN',
+                      keyboardType: TextInputType.phone,
+                      textAlign: TextAlign.start,
+                      style: GoogleFonts.montserrat(
+                          fontSize: 18, color: Colors.black),
+                      onChanged: (value) => setState(() {
+                        print(value.completeNumber);
+                        this.mobileno = value.completeNumber;
+                      }),
+                      // validator: (phone) {
+                      //   if (phone?.number.length != 10) {
+                      //     return "Please Enter Valid Phone No";
+                      //   } else {
+                      //     return null;
+                      //   }
+                      // },
                     ),
                     SizedBox(
                       height: 10,

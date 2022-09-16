@@ -1,10 +1,12 @@
 // ignore_for_file: file_names
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -77,6 +79,7 @@ class _Item_ReportState extends State<Item_Report> {
   void CreateCSV() async {
     List<List<dynamic>> rows = [];
 
+    // print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + vData.toString());
     List<dynamic> row = [];
     row.add("UserId");
     row.add("Content");
@@ -84,8 +87,11 @@ class _Item_ReportState extends State<Item_Report> {
     rows.add(row);
     for (int i = 0; i < vData.length; i++) {
       List<dynamic> row = [];
-      row.add(vData[i]["UserId"] - 1);
-      row.add(vData[i]["Content"]);
+      print("------------" +
+          vData[i]["UserId"].toString() +
+          "-----------------");
+      row.add((vData[i]["UserId"]).toString());
+      row.add(vData[i]["Content "]);
       row.add(vData[i]["Readings"]);
       rows.add(row);
     }
@@ -95,7 +101,7 @@ class _Item_ReportState extends State<Item_Report> {
     Directory? dar = await getExternalStorageDirectory();
     String fullPath = dar!.path;
 
-    File f = File(fullPath + "/filename${widget.id}.csv");
+    File f = File(fullPath + "/filename${widget.id.replaceAll("-", "")}.csv");
     f.writeAsString(csv);
 
     print("${f.path}");
@@ -156,53 +162,71 @@ class _Item_ReportState extends State<Item_Report> {
                     onPressed: () async {
                       CreateCSV();
                       Directory? d = await getExternalStorageDirectory();
-                      String Pathway = '${d!.path}/filename${widget.id}.csv';
+                      String Pathway =
+                          '${d!.path}/filename${widget.id.replaceAll("-", "")}.csv';
                       print("Path ---> $Pathway");
-                      //File(Pathway).writeAsBytesSync(bytes);
-                      await Share.shareFiles([Pathway!]);
 
+                      //File(Pathway).writeAsBytesSync(bytes);
+                      try {
+                        await FlutterShare.shareFile(
+                          title: 'Example share',
+                          text: 'Example share text',
+                          filePath: Pathway,
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
                     }),
               ),
             ),
             SizedBox(
               height: 10,
             ),
-            FutureBuilder(
-                future: TableAPI(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          Table(
-                            defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                            columnWidths: const {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(3),
-                              2: FlexColumnWidth(5),
-                            },
-                            defaultColumnWidth: const FlexColumnWidth(),
-                            border: TableBorder.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(10),
-                                ),
-                                width: 2),
-                            children: _drawTable(snapshot.data['list']),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("unable to fetch detail");
-                  } else {
-                    return Text("");
-                  }
-                }),
+            Expanded(
+              child: FutureBuilder(
+                  future: TableAPI(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data["list"].length == 0) {
+                        return const Center(
+                          child: Text("Please Upload a Report for analysis"),
+                        );
+                      } else {
+                        return ListView(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          children: _drawTable(snapshot.data['list']),
+                        );
+                      }
+                      // return Column(
+                      //   children: [
+                      //     Table(
+                      //       defaultVerticalAlignment:
+                      //       TableCellVerticalAlignment.middle,
+                      //       columnWidths: const {
+                      //         0: FlexColumnWidth(1),
+                      //         1: FlexColumnWidth(3),
+                      //         2: FlexColumnWidth(5),
+                      //       },
+                      //       defaultColumnWidth: const FlexColumnWidth(),
+                      //       border: TableBorder.all(
+                      //           color: Colors.black,
+                      //           style: BorderStyle.solid,
+                      //           borderRadius: BorderRadius.vertical(
+                      //             top: Radius.circular(10),
+                      //           ),
+                      //           width: 2),
+                      //       children: _drawTable(snapshot.data['list']),
+                      //     ),
+                      //   ],
+                      // );
+                    } else if (snapshot.hasError) {
+                      return Text("unable to fetch detail");
+                    } else {
+                      return Text("");
+                    }
+                  }),
+            ),
             // FutureBuilder(
             //     future: plotAnalysisGraph(),
             //     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -268,44 +292,44 @@ class _Item_ReportState extends State<Item_Report> {
             //         return Text("");
             //       }
             //     }),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: FutureBuilder(
-                future: getAnalyzedImage(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data['list'].length,
-                        itemBuilder: (context, index) {
-                          if (snapshot.data['list'].length != 0) {
-                            return Container(
-                              margin: EdgeInsets.all(10),
-                              height: _height * 30,
-                              width: _width * 80,
-                              child: Image.network(
-                                snapshot.data['list'][index]['img'],
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          } else {
-                            return Center(child: Text("No Reorts"));
-                          }
-                        });
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text("No Internet"));
-                  } else {
-                    return Center(
-                      child: Container(
-                          height: 200,
-                          width: 200,
-                          child: Lottie.asset("assets/loader.json")),
-                    );
-                  }
-                },
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            //   child: FutureBuilder(
+            //     future: getAnalyzedImage(),
+            //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //       if (snapshot.hasData) {
+            //         return ListView.builder(
+            //             shrinkWrap: true,
+            //             physics: NeverScrollableScrollPhysics(),
+            //             itemCount: snapshot.data['list'].length,
+            //             itemBuilder: (context, index) {
+            //               if (snapshot.data['list'].length != 0) {
+            //                 return Container(
+            //                   margin: EdgeInsets.all(10),
+            //                   height: _height * 30,
+            //                   width: _width * 80,
+            //                   child: Image.network(
+            //                     snapshot.data['list'][index]['img'],
+            //                     fit: BoxFit.cover,
+            //                   ),
+            //                 );
+            //               } else {
+            //                 return Center(child: Text("No Reorts"));
+            //               }
+            //             });
+            //       } else if (snapshot.hasError) {
+            //         return const Center(child: Text("No Internet"));
+            //       } else {
+            //         return Center(
+            //           child: Container(
+            //               height: 200,
+            //               width: 200,
+            //               child: Lottie.asset("assets/loader.json")),
+            //         );
+            //       }
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -313,92 +337,88 @@ class _Item_ReportState extends State<Item_Report> {
   }
 
   _drawTable(response) {
-    List<TableRow> columnContent = [
-      TableRow(
-        decoration: BoxDecoration(color: Colors.grey[200]),
-        children: [
-          Column(
-            children: [
-              Text(
-                "",
-                style: TextStyle(fontSize: 12),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                "Profile",
-                style: GoogleFonts.mulish(
-                    fontSize: 18, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Values",
-                  style: GoogleFonts.mulish(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    ];
-    if (response.length == 0) {
-      columnContent.add(TableRow(
-        children: [
-          Column(
-            children: [Text("-")],
-          ),
-          Column(
-            children: const [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Text("-"),
-              )
-            ],
-          ),
-          Column(
-            children: const [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("-"),
-              )
-            ],
-          )
-        ],
-      ));
-    }
-    for (int i = 0; i < response.length; i++) {
-      columnContent.add(TableRow(
-        children: [
-          Column(
-            children: [Text("$i")],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Text(response[i]['title'].toString()),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(response[i]['values'].toString()),
-              )
-            ],
-          )
-        ],
-      ));
-    }
-    return columnContent;
+    log(response.toString());
+    return List.generate(response.length, (index) {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: ExpansionTile(
+          collapsedBackgroundColor: Colors.blue,
+          collapsedTextColor: Colors.white,
+          collapsedIconColor: Colors.white,
+          title: Text(response[index]['title'].toString()),
+          children: [
+            Text(
+              "Values",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: List.generate(response[index]['values'].length, (i) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                      (i + 1).toString() + ") " + response[index]['values'][i]),
+                );
+              }),
+            )
+          ],
+        ),
+      );
+    });
+    // if (response.length == 0) {
+    //   columnContent.add(TableRow(
+    //     children: [
+    //       Column(
+    //         children: [Text("-")],
+    //       ),
+    //       Column(
+    //         children: const [
+    //           Padding(
+    //             padding: const EdgeInsets.all(5.0),
+    //             child: Text("-"),
+    //           )
+    //         ],
+    //       ),
+    //       Column(
+    //         children: const [
+    //           Padding(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: Text("-"),
+    //           )
+    //         ],
+    //       )
+    //     ],
+    //   ));
+    // }
+    // for (int i = 0; i < response.length; i++) {
+    //   columnContent.add(TableRow(
+    //     children: [
+    //       Column(
+    //         children: [Text("$i")],
+    //       ),
+    //       Column(
+    //         children: [
+    //           Padding(
+    //             padding: const EdgeInsets.all(5.0),
+    //             child: Text(response[i]['title'].toString()),
+    //           )
+    //         ],
+    //       ),
+    //       Column(
+    //         children: [
+    //           Padding(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: Text(response[i]['values'].toString()),
+    //           )
+    //         ],
+    //       )
+    //     ],
+    //   ));
+    // }
+    // return columnContent;
   }
 }

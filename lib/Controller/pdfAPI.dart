@@ -26,7 +26,7 @@ class PDFApi {
     // list.insert(1, jsonDecode(response.body));
     print(
         "create collection stscde and response ${response.statusCode} ${response.body}");
-    return list;
+    return response.body;
   }
 
   Future getCollections(id) async {

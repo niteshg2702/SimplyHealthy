@@ -48,8 +48,10 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
   bool? isFirstUser;
   var userList;
   Auth auth = Auth();
+  int count = 0;
+
+  @override
   void initState() {
-    getAllUser();
     super.initState();
   }
 
@@ -74,14 +76,18 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
       setState(() {
         totalUser = userList['data'].length;
       });
-      print("${jsonDecode(response.body)}");
+      if(totalUser == 1 && count == 0) {
+        setState(() {
+          count = 1;
+        });
+        await addUser(userList["data"][0]["name"], userList["data"][0]["email"], userList["data"][0]["mobile"], picture[0]);
+      }
     }
-
     return userList;
   }
 
   Future addUser(name, email, mobile, avatar) async {
-    int i = int.parse(mobile);
+    int i = int.parse(mobile.toString().replaceAll("+", ""));
     assert(i is int);
 
     var body = jsonEncode({
@@ -157,122 +163,127 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                               shrinkWrap: true,
                               itemCount: userList['data'].length,
                               itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                  height: _height * 27,
-                                  width: _width * 90,
-                                  child: InkWell(
-                                    onTap: () {
-                                      print(
-                                          "!!@@ ${userList['data']}");
-                                      print(isFirstUser);
+                                if(userList["data"][index]["foreign_key"] == null) {
+                                  return Container();
+                                } else {
+                                  return Container(
+                                    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                    height: _height * 27,
+                                    width: _width * 90,
+                                    child: InkWell(
+                                      onTap: () {
+                                        print(
+                                            "!!@@ ${userList['data']}");
+                                        print(isFirstUser);
 
-                                      Navigator
-                                          .of(context)
-                                          .push(
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  HomeScreen_Patient(
-                                                    id: userList['data']
-                                                    [index]['id'],
-                                                    avatar: index == 0
-                                                        ? picture[index]
-                                                        : userList['data']
-                                                    [index]['img'],
-                                                    name: userList['data']
-                                                    [index]['name'],
-                                                    email: userList['data']
-                                                    [index]['email'],
-                                                    mobile: userList['data']
-                                                    [index]['mobile'],
-                                                  )
+                                        Navigator
+                                            .of(context)
+                                            .push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    HomeScreen_Patient(
+                                                      id: userList['data']
+                                                      [index]['id'],
+                                                      avatar: index == 0
+                                                          ? picture[index]
+                                                          : userList['data']
+                                                      [index]['img'],
+                                                      name: userList['data']
+                                                      [index]['name'],
+                                                      email: userList['data']
+                                                      [index]['email'],
+                                                      mobile: userList['data']
+                                                      [index]['mobile'],
+                                                    )
+                                            )
+                                        );
+
+                                        // isFirstUser!
+                                        //     ? Navigator.push(
+                                        //         context,
+                                        //         MaterialPageRoute(
+                                        //             builder: (context) =>
+                                        //                 Recommandation(
+                                        //                   role: "patient",
+                                        //                   id: userList['data']
+                                        //                       [index]['id'],
+                                        //                   avatar: index == 0
+                                        //                       ? picture[index]
+                                        //                       : userList['data']
+                                        //                           [index]['img'],
+                                        //                   name: userList['data']
+                                        //                       [index]['name'],
+                                        //                   email: userList['data']
+                                        //                       [index]['email'],
+                                        //                   mobile: userList['data']
+                                        //                       [index]['mobile'],
+                                        //                 )))
+                                        //     : Navigator.push(
+                                        //         context,
+                                        //         MaterialPageRoute(
+                                        //             builder: (context) =>
+                                        //                 BottomNavigationPatient(
+                                        //                   id: userList['data']
+                                        //                       [index]['id'],
+                                        //                   avatar: index == 0
+                                        //                       ? picture[index]
+                                        //                       : userList['data']
+                                        //                           [index]['img'],
+                                        //                   name: userList['data']
+                                        //                       [index]['name'],
+                                        //                   email: userList['data']
+                                        //                       [index]['email'],
+                                        //                   mobile: userList['data']
+                                        //                       [index]['mobile'],
+                                        //                 )),
+                                        //       );
+                                      },
+                                      child: Card(
+                                        elevation: 5,
+                                        color: colors[index][800],
+                                        shape: RoundedRectangleBorder(
+                                          side: isEdit
+                                              ? BorderSide(
+                                            color: Colors.blue,
+                                            width: 3,
                                           )
-                                      );
-
-                                      // isFirstUser!
-                                      //     ? Navigator.push(
-                                      //         context,
-                                      //         MaterialPageRoute(
-                                      //             builder: (context) =>
-                                      //                 Recommandation(
-                                      //                   role: "patient",
-                                      //                   id: userList['data']
-                                      //                       [index]['id'],
-                                      //                   avatar: index == 0
-                                      //                       ? picture[index]
-                                      //                       : userList['data']
-                                      //                           [index]['img'],
-                                      //                   name: userList['data']
-                                      //                       [index]['name'],
-                                      //                   email: userList['data']
-                                      //                       [index]['email'],
-                                      //                   mobile: userList['data']
-                                      //                       [index]['mobile'],
-                                      //                 )))
-                                      //     : Navigator.push(
-                                      //         context,
-                                      //         MaterialPageRoute(
-                                      //             builder: (context) =>
-                                      //                 BottomNavigationPatient(
-                                      //                   id: userList['data']
-                                      //                       [index]['id'],
-                                      //                   avatar: index == 0
-                                      //                       ? picture[index]
-                                      //                       : userList['data']
-                                      //                           [index]['img'],
-                                      //                   name: userList['data']
-                                      //                       [index]['name'],
-                                      //                   email: userList['data']
-                                      //                       [index]['email'],
-                                      //                   mobile: userList['data']
-                                      //                       [index]['mobile'],
-                                      //                 )),
-                                      //       );
-                                    },
-                                    child: Card(
-                                      elevation: 5,
-                                      color: colors[index][800],
-                                      shape: RoundedRectangleBorder(
-                                        side: isEdit
-                                            ? BorderSide(
-                                                color: Colors.blue,
-                                                width: 3,
-                                              )
-                                            : BorderSide.none,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            index == 0
-                                                ? picture[index]
-                                                : userList['data'][index]
-                                                    ['img'],
-                                            scale: 4,
-                                          ),
-                                          Flexible(
-                                            flex: 4,
-                                            child: Text(
-                                              userList['data'][index]['name'],
-                                              style: GoogleFonts.montserrat(
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.normal,
+                                              : BorderSide.none,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              index == 0
+                                                  ? picture[index]
+                                                  : userList['data'][index]
+                                              ['img'],
+                                              scale: 4,
+                                            ),
+                                            Flexible(
+                                              flex: 4,
+                                              child: Text(
+                                                userList['data'][index]['name'],
+                                                style: GoogleFonts.montserrat(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 40,
-                                          ),
-                                        ],
+                                            const SizedBox(
+                                              width: 40,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
+
                               });
                         } else if (snapshot.hasError) {
                           return Center(child: Text("unable"));
@@ -282,7 +293,11 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                       }),
                   InkWell(
                     onTap: () {
-                      addUserDialog();
+                      addUserDialog().then((value) {
+                        if(mounted) {
+                          setState(() {});
+                        }
+                      });
                       //addUser();
                     },
                     child: Container(
@@ -572,16 +587,9 @@ class _HomeScreenPateintState extends State<HomeScreenPateint> {
                           return;
                         } else {
                           formGlobalKey.currentState!.save();
-
-                          if (totalUser! < 4) {
                             addUser(_name.text, _email.text, _mobile.text,
                                 selectedAvtar);
                             Navigator.pop(context);
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Maximum 4 user can join");
-                            Navigator.pop(context);
-                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(

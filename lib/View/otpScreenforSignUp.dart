@@ -345,15 +345,16 @@ class _OTPSIGNUPState extends State<OTPSIGNUP> {
       setState(() {
         isLoading = false;
       });
-      Fluttertoast.showToast(msg: "Mobile verification Failed..");
+      Fluttertoast.showToast(msg: "${exception.message.toString()}");
       print("${exception.message}");
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+91${widget.phoneNo}",
+        phoneNumber: "${widget.phoneNo}",
         verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
         codeSent: SMSCodeSent,
         timeout: const Duration(seconds: 5),
-        codeAutoRetrievalTimeout: autoRetrive);
+        codeAutoRetrievalTimeout: autoRetrive
+    );
   }
 }

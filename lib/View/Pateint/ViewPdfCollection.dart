@@ -1,6 +1,8 @@
 // ignore_for_file: file_names, prefer_const_constructors, unrelated_type_equality_checks, unused_local_variable
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simplyhealthy/Controller/sharedPreferance.dart';
 import 'package:simplyhealthy/Model/MlResponseModel.dart';
+import 'package:simplyhealthy/View/Pateint/item_Report.dart';
 import 'package:simplyhealthy/main.dart';
 import '/Colors/Colors.dart';
 import '/Controller/pdfAPI.dart';
@@ -147,7 +150,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                     ),
                     InkWell(
                       onTap: () {
-                        _FileShareDialog(widget.collectionName);
+                        _FileShareDialog(context, widget.collectionName);
                         // UploadPdfDialog(widget.collectionName);
                         // PDFApi pdfApi = PDFApi();
                         // pdfApi.createCollection(mapCOPY).then((value) {
@@ -545,7 +548,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     // showDialog<AlertDialog>(context: context, a);
   }
 
-  Future _FileShareDialog(collectionName) async {
+  Future _FileShareDialog(BuildContext context, collectionName) async {
     //String? filterLocal;
     final formGlobalKey = GlobalKey<FormState>();
     String filepath = "";
@@ -628,6 +631,9 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                           isfileuploading = true;
                         });
                         getPdfAndUpload().then((value) {
+                          if (value == null) {
+                            Navigator.of(context).pop();
+                          }
                           print("hello dear ${value.path}");
                           setState(() {
                             sendFileAnalysis = value;
@@ -746,19 +752,20 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
     });
     Response response =
-        await dio.post("http://54.197.107.221:5000/pdf", data: formData);
+        await dio.post("http://13.233.140.141/pdf", data: formData);
 
     print("DIO ${response.data}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      MlAnalyzedREport(response.data, fileName);
+      MlAnalyzedREport(response.data["data"], fileName);
     } else {
       Fluttertoast.showToast(msg: "You will get analyzed report by 24 hour");
     }
   }
 
   Future MlAnalyzedREport(response, fileName) async {
-    int totalPage = response['table'].length;
+    print(response.length.toString());
+    int totalPage = response.length;
 
     print("Total Number Of Page : $totalPage");
 
@@ -773,29 +780,36 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     MLModel mlmodel;
 
     for (int i = 0; i < totalPage; i++) {
-      if (response['table'][i].length >= 2) {
-        response['table'][i]['1'].entries.map((e) {
-          if (e.value.replaceAll(RegExp('[^0-9.]'), '').toString().isNotEmpty) {
-            if (response['table'][i]['0'][(e.key).toString()]
-                .replaceAll(RegExp('[^A-Za-z]'), '')
+      if (response[i].length >= 2) {
+        Map res = response[i];
+        if (!res.containsKey("accuracy")) {
+          res['1'].entries.map((e) {
+            if (e.value
+                .replaceAll(RegExp('[^0-9.]'), '')
                 .toString()
-                .trim()
                 .isNotEmpty) {
-              values.add(
-                MLModel(
-                  response['table'][i]['0'][(e.key).toString()]
-                      .replaceAll(RegExp('[^A-Za-z]'), '')
-                      .toString()
-                      .toUpperCase(),
-                  e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
-                  // response['table'][i]['2'][e.key],
-                ),
-              );
+              if (response[i]['0'][(e.key).toString()]
+                  .replaceAll(RegExp('[^A-Za-z]'), '')
+                  .toString()
+                  .trim()
+                  .isNotEmpty) {
+                values.add(
+                  MLModel(
+                    response[i]['0'][(e.key).toString()]
+                        .replaceAll(RegExp('[^A-Za-z]'), '')
+                        .toString()
+                        .toUpperCase(),
+                    e.value.replaceAll(RegExp('[^0-9.]'), '').toString(),
+                    // response['table'][i]['2'][e.key],
+                  ),
+                );
+              }
             }
-          }
-        }).toList();
+          }).toList();
+        }
       }
     }
+    
     MLModel m = values[0];
     print(m.testname);
     print(m.value);
@@ -823,11 +837,13 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
       body: jsonEncode(b1),
     );
 
+    log(response.body.toString());
+
     print("Analysis Post report :: ${response.statusCode} | ${response.body}");
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202) {
-      Fluttertoast.showToast(msg: 'Report Generated Successfully');
+      Fluttertoast.showToast(msg: "Report Generated Successfully");
     }
   }
 
@@ -837,9 +853,15 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
     File? file;
     if (result != null) {
       file = await File(result.files.single.path!);
-      setState(() {
-        viewfile = file;
-      });
+      print(file.lengthSync().toString());
+      if (file.lengthSync() / 1024 < 1024) {
+        setState(() {
+          viewfile = file;
+        });
+      } else {
+        Fluttertoast.showToast(msg: "File size greater than 1MB");
+        return;
+      }
     } else {
       // User canceled the picker
     }
@@ -939,7 +961,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                                 });
                               },
                             ),
-                            Text('Whatsup',
+                            Text('Whatsapp',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.black, fontSize: 15)),
                           ],
@@ -956,7 +978,7 @@ class _ViewPdfCollectionState extends State<ViewPdfCollection> {
                                 });
                               },
                             ),
-                            Text('GMail',
+                            Text('Gmail',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.black, fontSize: 15)),
                           ],

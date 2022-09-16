@@ -718,21 +718,17 @@ class _item_P_PDFListState extends State<item_P_PDFList> {
                           pdfApi.createCollection(collection).then((value) {
                             print("hello");
                             print(collection);
-                            if (value[0] == 200 || value[0] == 201) {
-                              print("Collection created");
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ViewPdfCollection(
-                                      patientname: widget.name,
-                                      collectionName: value[0]['collection'],
-                                      userid: widget.id,
-                                      mode: "new",
-                                      collectionid: value[0]['id'],
-                                      collectionPdflist: value[0]['list'])));
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Something went wrong");
-                              Navigator.of(context);
-                            }
+                            print("Collection created");
+                            Navigator.of(context).pop();
+                            print(value.toString());
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (context) => ViewPdfCollection(
+                              //         patientname: widget.name,
+                              //         collectionName: value['collection'],
+                              //         userid: widget.id,
+                              //         mode: "new",
+                              //         collectionid: value['id'],
+                              //         collectionPdflist: value['list'])));
                           });
 
                           // Navigator.of(context).push(MaterialPageRoute(

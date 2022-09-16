@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import '/View/otp_screen.dart';
 
 class LogIn extends StatefulWidget {
@@ -64,45 +65,18 @@ class _LogInState extends State<LogIn> {
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
-                          child: TextFormField(
-                            //initialValue: name,
-                            keyboardType: TextInputType.phone,
-                            textAlign: TextAlign.start,
-                            style: GoogleFonts.montserrat(
-                                fontSize: 22, color: Colors.black),
-                            validator: (value) {
-                              if (value!.length != 10) {
-                                return "Please Enter Valid Phone No";
-                              } else {
-                                return null;
-                              }
-                            },
-                            onChanged: (value) => setState(() {
-                              this.mobileno = value;
-                            }),
+                          child: IntlPhoneField(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIconConstraints:
-                                  BoxConstraints(maxWidth: 50),
-                              prefixIcon: Center(
-                                //padding: const EdgeInsets.fromLTRB(10,12, 10,12),
-                                child: Text(
-                                  "+91",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 22,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              hintText: "Enter Mobile No",
+                              hintText: "Enter Mobile Number",
                               isDense: true,
-                              contentPadding: EdgeInsets.all(10),
+                              contentPadding: EdgeInsets.all(13),
                               hintStyle: GoogleFonts.montserrat(
-                                fontSize: 22,
+                                fontSize: 18,
                                 color: Colors.grey,
                               ),
+                              errorStyle: TextStyle(color: Colors.white, height: 1),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(6),
@@ -112,6 +86,22 @@ class _LogInState extends State<LogIn> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
+                            initialCountryCode: 'IN',
+                            keyboardType: TextInputType.phone,
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 18, color: Colors.black),
+                            onChanged: (value) => setState(() {
+                              print(value.completeNumber);
+                              this.mobileno = value.completeNumber;
+                            }),
+                            // validator: (phone) {
+                            //   if (phone?.number.length != 10) {
+                            //     return "Please Enter Valid Phone No";
+                            //   } else {
+                            //     return null;
+                            //   }
+                            // },
                           ),
                         ),
                         Container(

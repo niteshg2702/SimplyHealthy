@@ -101,6 +101,7 @@ class Auth {
     if (response.statusCode == 201 || response.statusCode == 200) {
       list.insert(1, a['user']['id']);
       list.insert(2, a['user']['role']);
+      list.insert(3, a['user']);
       print("${a['user']['id']}");
     } else {
       Fluttertoast.showToast(msg: "${a["error"]}");
@@ -136,7 +137,7 @@ class Auth {
       FirebaseAuth.instance.signOut();
       Fluttertoast.showToast(msg: "${a["error"]}");
     }
-    return list;
+    return response.body;
   }
 
   Future updateUserProfile(name, mobileNo, email, id, img) async {

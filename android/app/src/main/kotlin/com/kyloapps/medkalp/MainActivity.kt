@@ -1,4 +1,4 @@
-package com.example.simplyhealthy
+package com.kyloapps.medkalp
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -99,7 +99,7 @@ class _ItemDReportState extends State<ItemDReport> {
                           }
                         }
                         if(map["list"].length == 0) {
-                          return CircularProgressIndicator();
+                          return Center(child: Text("No Reports"));
                         } else {
                           return ListView.builder(
                               physics: BouncingScrollPhysics(),

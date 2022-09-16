@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_declarations
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore_for_file: prefer_final_fields, avoid_print, unnecessary_null_comparison, unnecessary_this, non_constant_identifier_names, prefer_function_declarations_over_variables
@@ -16,6 +18,7 @@ import '/View/Pateint/Home_Screen_Pateint.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class otp_screen extends StatefulWidget {
   const otp_screen({Key? key, required this.phoneNo}) : super(key: key);
@@ -35,6 +38,35 @@ class _otp_screenState extends State<otp_screen> {
   Timer? _timer;
   int start = 59;
   Auth _auth = Auth();
+
+  Future addUser(id, name, email, mobile, avatar) async {
+    int i = int.parse(mobile.toString().replaceAll("+", ""));
+    assert(i is int);
+
+    var body = jsonEncode({
+      "username": name,
+      "email": email,
+      "mobile": i,
+      "id": id,
+      "img_link": avatar
+    });
+
+    // print("${body}");
+    var headers = {'content-Type': 'application/json'};
+
+    http.Response response = await http.post(
+        Uri.parse("https://pdf00.herokuapp.com/api/v1/views/patient_create"),
+        body: body,
+        headers: headers);
+
+    print("${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var parsed = jsonDecode(response.body);
+      print("string ${parsed['user']['id']}");
+      _auth.createDefaultCollection(parsed['user']['id']);
+      print("${jsonDecode(response.body)}");
+    }
+  }
 
   @override
   void initState() {
@@ -277,6 +309,7 @@ class _otp_screenState extends State<otp_screen> {
                 isloader = false;
               });
             } else if (value[2] == 'patient') {
+              log(value.toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -353,11 +386,11 @@ class _otp_screenState extends State<otp_screen> {
     // ignore: prefer_function_declarations_over_variables
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException exception) {
-      Fluttertoast.showToast(msg: "Mobile verification Failed..");
+      Fluttertoast.showToast(msg: "${exception.message.toString()}");
       print("${exception.message}");
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+91${widget.phoneNo}",
+        phoneNumber: "${widget.phoneNo}",
         verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
         codeSent: SMSCodeSent,

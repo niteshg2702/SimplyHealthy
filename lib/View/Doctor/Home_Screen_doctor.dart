@@ -73,7 +73,7 @@ class _HomeScreenDoctorState extends State<HomeScreenDoctor> {
   }
 
   Future addUser(name, email, mobile) async {
-    int i = int.parse(mobile);
+    int i = int.parse(mobile.toString().replaceAll("+", ""));
     assert(i is int);
 
     var body = jsonEncode(

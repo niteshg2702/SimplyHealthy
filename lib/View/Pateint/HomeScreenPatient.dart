@@ -7,6 +7,7 @@ import 'package:simplyhealthy/View/Pateint/Reports.dart';
 import 'package:simplyhealthy/View/Pateint/item_P_blogList.dart';
 import 'package:simplyhealthy/View/Pateint/item_P_doctorList.dart';
 import 'package:simplyhealthy/View/Pateint/item_Report.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen_Patient extends StatefulWidget {
   HomeScreen_Patient({Key? key, required this.id, required this.name, required this.avatar, required this.email, required this.mobile}) : super(key: key);
@@ -108,20 +109,12 @@ class _HomeScreen_PatientState extends State<HomeScreen_Patient> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => Reports_Dashboard(id: widget.id, name: widget.name, avatar: widget.avatar, email: widget.email, mobile: widget.mobile)));
                   }),
                   //Medfora
-                  container(_height, _width, card[1], "Medfora", () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)
-                          ),
-                          title: const Text('Medfora'),
-                          content: const Text('This content is not available right now.'),
-                          actions: [
-                            TextButton(onPressed: () => Navigator.pop(context), child: const Text("OK"))
-                          ],
-                        )
-                    );
+                  container(_height, _width, card[1], "Medfora", () async {
+                    final url =
+                        Uri.parse("https://www.facebook.com/MedFora-103544279057336");
+                    if (!await launchUrl(url)) {
+                      throw 'Could not launch';
+                    }
                   }),
                   //Blogs
                   container(_height, _width, card[2], "Blogs", () {
